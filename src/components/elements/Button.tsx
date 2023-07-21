@@ -1,6 +1,5 @@
 import { MouseEvent, ReactNode } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
-import { MdAdd } from 'react-icons/md';
 
 /**
  * type : submit (제출), edit (수정), delete (삭제), plus(+버튼)

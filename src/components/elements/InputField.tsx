@@ -1,6 +1,4 @@
-import React, { forwardRef } from 'react';
-import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
-import { MdDone } from 'react-icons/md';
+import React, { forwardRef, ChangeEvent, HTMLInputTypeAttribute  } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 /**
@@ -27,9 +25,9 @@ const theme: DefaultTheme = {
   borderColor: '#d4d4d8',
 };
 
-const checkColor: React.CSSProperties = {
-  color: theme.checkColor,
-};
+// const checkColor: React.CSSProperties = {
+//   color: theme.checkColor,
+// };
 /** InputFiled 컴포넌트 */
 export const InputField = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   if (props.type !== 'checkbox')
@@ -63,7 +61,6 @@ export const InputField = forwardRef<HTMLInputElement, InputProps>((props, ref) 
         />
         {props.defaultChecked ? (
           <Checked defaultChecked={props.defaultChecked}>
-            <MdDone style={checkColor} />
           </Checked>
         ) : (
           <Checked />
@@ -100,6 +97,5 @@ const Checked = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   ${props => props.defaultChecked && `border-color : ${theme.checkColor};`}
 `;
