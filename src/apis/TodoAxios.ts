@@ -1,7 +1,11 @@
 import AxiosInstance from './AxiosInstance';
 
 // update Todo List API 연결
-export async function updateTodoAxios(id: string, todo: string, isCompleted: boolean) {
+export async function updateTodoAxios(
+  id: string,
+  todo: string,
+  isCompleted: boolean,
+) {
   try {
     const res = await AxiosInstance.put(`/todos/${id}`, {
       todo: todo,

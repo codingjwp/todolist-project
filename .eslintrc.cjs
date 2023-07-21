@@ -1,5 +1,3 @@
-/* eslint-env node */
-
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -8,6 +6,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react-hooks/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -16,17 +15,17 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'prettier'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
     ],
-    '@typescript-eslint/no-non-null-assertion': 'off',
     'no-dupe-keys': 'error',
     'no-dupe-args': 'error',
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-duplicate-imports': 'error',
     'no-unused-vars': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
 }

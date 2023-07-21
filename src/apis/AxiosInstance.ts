@@ -13,7 +13,7 @@ const AxiosInstance = axios.create({
 });
 
 AxiosInstance.interceptors.request.use(
-  async config => {
+  async (config) => {
     config.headers['Content-Type'] = 'application/json';
     const access_token = getToken();
     if (access_token !== null || access_token !== undefined) {
@@ -21,10 +21,10 @@ AxiosInstance.interceptors.request.use(
     }
     return config;
   },
-  async error => {
+  async (error) => {
     console.error('에러발생', error);
     return Promise.reject(error);
-  }
+  },
 );
 
 AxiosInstance.interceptors.response.use(
@@ -33,7 +33,7 @@ AxiosInstance.interceptors.response.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 export default AxiosInstance;

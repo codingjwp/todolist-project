@@ -11,20 +11,34 @@ export interface TodoProps {
 
 /** TodoItemGroup 타입 정의 */
 export interface TodoItemGroupProps extends TodoProps {
-  updateCheckTodo: (id: string, todo: string, isCompleted: boolean) => Promise<void>;
+  updateCheckTodo: (
+    id: string,
+    todo: string,
+    isCompleted: boolean,
+  ) => Promise<void>;
 }
 
-export type SetTodoItemData = React.Dispatch<React.SetStateAction<TodoItemGroupProps[]>>;
+export type SetTodoItemData = React.Dispatch<
+  React.SetStateAction<TodoItemGroupProps[]>
+>;
 
 /** TodoModify 타입 정의 */
 export interface TodoModifyProps extends TodoProps {
   setbuttonStatus: (active: boolean) => void;
-  updateCheckTodo: (id: string, todo: string, isCompleted: boolean) => Promise<void>;
+  updateCheckTodo: (
+    id: string,
+    todo: string,
+    isCompleted: boolean,
+  ) => Promise<void>;
 }
 
 /** TodoTrans 타입 정의 */
 export interface TodoTransProps extends TodoProps {
-  updateCheckTodo: (id: string, todo: string, isCompleted: boolean) => Promise<void>;
+  updateCheckTodo: (
+    id: string,
+    todo: string,
+    isCompleted: boolean,
+  ) => Promise<void>;
   deletebutton: (id: string) => void;
 }
 
@@ -60,5 +74,5 @@ export const TodoBox = styled.li`
 /** TodoItem 타이틀 스타일 */
 export const TodoTitle = styled.span<{ checked: boolean }>`
   width: 200px;
-  ${props => props.checked && `color : #D4D4D8`}
+  ${(props) => props.checked && `color : #D4D4D8`}
 `;
