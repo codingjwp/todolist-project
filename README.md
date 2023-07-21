@@ -1,12 +1,15 @@
 # ToDo List Project
-<div align="right">2023.07.14 ~ </div>
+<div align="right">2023.07.21 ~ </div>
 
 ## 목적
 
-<div align="center">  [팀프로젝트 링크](https://github.com/wanted-pre-onboarding-11th-14team/pre-onboarding-11th-1-14) </div>
+<div align="center">  
 
-1. 팀 프로젝트로 수정 했던 TodoList를 기록   
-2. TodoList를 만들면서 부족했던 부분 수정
+[팀프로젝트 링크](https://github.com/wanted-pre-onboarding-11th-14team/pre-onboarding-11th-1-14) 
+
+</div>
+
+1. 팀 프로젝트로 만들었던 TodoList를 수정해볼려고 작성
 
 <br>
 
