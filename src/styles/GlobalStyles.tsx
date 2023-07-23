@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
     * {
         border: 0 solid #e5e7eb;
         box-sizing: border-box;
@@ -25,7 +25,6 @@ export const GlobalStyles = createGlobalStyle`
         /* font: inherit; */
         vertical-align: baseline;
     }
-    /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, 
     footer, header, hgroup, menu, nav, section {
         display: block;
@@ -53,3 +52,5 @@ export const GlobalStyles = createGlobalStyle`
         border-spacing: 0;
     }
 `;
+
+export default GlobalStyles;

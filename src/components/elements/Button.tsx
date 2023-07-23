@@ -13,6 +13,7 @@ interface ButtonProps {
   type: 'submit' | 'edit' | 'delete' | 'plus';
   open?: boolean;
   name?: string;
+  ariaLabel?: string;
   size?: 'sm' | 'md' | 'lr';
   disabled?: boolean;
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -31,6 +32,7 @@ export const Button = ({
   testname,
   type,
   open,
+  ariaLabel,
   name,
   size,
   disabled,
@@ -41,19 +43,20 @@ export const Button = ({
     return (
       <PlusButton
         data-testid={testname}
+        aria-label={ariaLabel}
         type={type}
         open={open}
         name={name}
         size={size}
         disabled={disabled}
         onClick={onClick}>
-        <MdAdd />
       </PlusButton>
     );
   } else
     return (
       <ButtonStyle
         data-testid={testname}
+        aria-label={ariaLabel}
         type={type}
         name={name}
         size={size}

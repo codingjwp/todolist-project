@@ -5,7 +5,7 @@ interface LayoutProps {
   children?: ReactNode;
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   return <LayoutContainer>{children}</LayoutContainer>;
 };
 
@@ -23,3 +23,5 @@ const LayoutContainer = styled.div`
     0 10px 15px -3px rgb(0 0 0 / 0.1),
     0 4px 6px -4px rgb(0 0 0 / 0.1);
 `;
+
+export default Layout;

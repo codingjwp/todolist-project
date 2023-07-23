@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest",
+    "test": "vitest --bail 2",
     "testui": "vitest --ui",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "lint": "eslint --cache --ext .ts,tsx src/**/*"
