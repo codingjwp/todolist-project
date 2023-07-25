@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, IconButton } from '../components/Button';
 import styled from 'styled-components';
@@ -12,10 +12,14 @@ const Home = () => {
   return (
       <HomeContainer>
         <HomeTitle>Todo</HomeTitle>
-        <Button aria-label='signin' type='button' onClick={redirectToSignupOrLogin} size='large' btnType='primary'>
+        <IconButton iconName='btn-delete' iconScale={2} iconFill='#ffffff'
+        aria-label='signin' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>
+          delete
+        </IconButton> 
+        <Button aria-label='signin' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>
           SignIn
         </Button>
-        <Button aria-label='signup' type='button' onClick={redirectToSignupOrLogin} size='large' btnType='dismiss'>SignUp</Button>
+        <Button aria-label='signup' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='dismiss'>SignUp</Button>
       </HomeContainer>
   );
 };
@@ -33,4 +37,4 @@ const HomeContainer = styled.div`
   justify-content: space-around;
 `;
 
-export default Home;
+export default memo(Home);

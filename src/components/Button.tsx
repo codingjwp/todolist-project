@@ -3,31 +3,30 @@ import styled, { css } from 'styled-components';
 import {SvgIcon, SvgIconProps} from './SvgIcon';
 
 interface ButtonStyleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  size : "basic" | "large" | "circle";
-  btnType: "primary" | "dismiss";
-  open?: boolean;
-  icon?: boolean;
+  $size: "basic" | "large" | "circle";
+  $btnType: "primary" | "dismiss";
+  $open?: "ok" | "no";
+  $isIcon?: "ok" | "no";
 }
 
-export const Button: FC<ButtonStyleProps> = ({size, btnType, open, ...props}) => {
+export const Button: FC<ButtonStyleProps> = ({$size, $btnType, $open, ...props}) => {
   return (
-    <ButtonStyle icon={false} size={size} btnType={btnType} open={open} {...props}>
+    <ButtonStyle $isIcon={"no"} $size={$size} $btnType={$btnType} $open={$open} {...props}>
       {props.children}
     </ButtonStyle>
   )
 }
 
 interface IconStyleProps extends ButtonStyleProps {
-  iconWidth?: number;
-  iconHeight?: number;
+  iconScale?: number;
   iconFill?: string;
   iconName: SvgIconProps["iconName"];
 }
 
-export const IconButton: FC<IconStyleProps> = ({size, btnType, open, iconName, iconWidth, iconHeight, iconFill, ...props}) => {
+export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $open, iconName, iconScale, iconFill, ...props}) => {
   return (
-    <ButtonStyle icon={true} size={size} btnType={btnType} open={open} {...props}>
-      <SvgIcon iconName={iconName} width={iconWidth} height={iconHeight} fill={iconFill} />
+    <ButtonStyle $isIcon={"ok"} $size={$size} $btnType={$btnType} $open={$open} {...props}>
+      <SvgIcon iconName={iconName} transform={`scale(${iconScale})`} fill={iconFill} />
       {props.children}
     </ButtonStyle>
   )
@@ -35,13 +34,13 @@ export const IconButton: FC<IconStyleProps> = ({size, btnType, open, iconName, i
 
 const btnTheme = {
   "primary": css`
-    background-color: #398F69;
+    background-color: #2929FF;
     &:hover {
       filter: brightness(.8);
     }
   `,
   "dismiss": css`
-    background-color: #EF3D33;
+    background-color: #B31010;
     &:hover {
       filter: brightness(.8);
     }
@@ -70,9 +69,9 @@ const btnSize = {
 const ButtonStyle = styled.button<ButtonStyleProps>`
   cursor: pointer;
   color: #ffffff;
-  ${({size}) => btnSize[size]};
-  ${({btnType}) => btnTheme[btnType]};
-  ${({icon}) => icon && css`
+  ${({$size}) => btnSize[$size]};
+  ${({$btnType}) => btnTheme[$btnType]};
+  ${({$isIcon}) => $isIcon === "ok" && css`
     display: flex;
     flex-direction: row;
     justify-content: center;

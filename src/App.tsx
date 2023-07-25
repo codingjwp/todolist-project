@@ -12,6 +12,7 @@ export const routerElement = [
       <Layout>
         <Outlet />
       </Layout>),
+    errorElement: <div>error</div>,
     children: [
       { index: true, element: <Home /> },
       { path: 'signup', element: <SignUp /> },
