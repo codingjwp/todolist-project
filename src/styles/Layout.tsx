@@ -11,8 +11,8 @@ const Layout = ({ children }: LayoutProps) => {
 
 const LayoutContainer = styled.div`
   width: 24rem;
-  height: 500px;
-  padding: 64px 32px;
+  height: 31.25rem;
+  padding: 4rem 2rem;
   position: absolute;
   top: 50%;
   left: 50%;

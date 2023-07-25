@@ -1,40 +1,36 @@
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/elements/Button';
+import { Button, IconButton } from '../components/Button';
 import styled from 'styled-components';
 
 const Home = () => {
   const navigate = useNavigate();
-  const handleMoveClick = (e: MouseEvent<HTMLButtonElement>) => {
-    navigate(e.currentTarget.name);
+  const redirectToSignupOrLogin = (e: MouseEvent<HTMLButtonElement>) => {
+    navigate(e.currentTarget.ariaLabel as string);
   };
 
   return (
-    <>
-      <HomeTitle>Todo</HomeTitle>
       <HomeContainer>
-        <Button ariaLabel="signin" name='signin' type='submit' size='md' onClick={handleMoveClick}>
+        <HomeTitle>Todo</HomeTitle>
+        <Button aria-label='signin' type='button' onClick={redirectToSignupOrLogin} size='large' btnType='primary'>
           SignIn
         </Button>
-        <Button ariaLabel="signup" name='signup' type='submit' size='md' onClick={handleMoveClick}>
-          SignUp
-        </Button>
+        <Button aria-label='signup' type='button' onClick={redirectToSignupOrLogin} size='large' btnType='dismiss'>SignUp</Button>
       </HomeContainer>
-    </>
   );
 };
 
 const HomeTitle = styled.h1`
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 40%;
+  font-size: 3rem;
 `;
 const HomeContainer = styled.div`
+  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  & button:first-child {
-    margin-right: 20px;
-  }
+  justify-content: space-around;
 `;
 
 export default Home;
