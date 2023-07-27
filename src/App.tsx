@@ -2,8 +2,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import GlobalStyles from './styles/GlobalStyles';
 import Layout from './styles/Layout';
 import Home from './pages/Home';
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
+import SignInOfUp from './pages/SignInOfUp';
 
 export const routerElement = [
   {
@@ -15,8 +14,8 @@ export const routerElement = [
     errorElement: <div>error</div>,
     children: [
       { index: true, element: <Home /> },
-      { path: 'signup', element: <SignUp /> },
-      { path: 'signin', element: <SignIn /> },
+      { path: 'signup', element: <SignInOfUp titles='Sign Up' /> },
+      { path: 'signin', element: <SignInOfUp titles='Sign In' /> },
   ]}
 ];
 

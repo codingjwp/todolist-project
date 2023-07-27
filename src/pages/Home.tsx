@@ -1,6 +1,6 @@
 import { MouseEvent, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, IconButton } from '../components/Button';
+import { Button } from '../components/Button';
 import styled from 'styled-components';
 
 const Home = () => {
@@ -12,14 +12,8 @@ const Home = () => {
   return (
       <HomeContainer>
         <HomeTitle>Todo</HomeTitle>
-        <IconButton iconName='btn-delete' iconScale={2} iconFill='#ffffff'
-        aria-label='signin' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>
-          delete
-        </IconButton> 
-        <Button aria-label='signin' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>
-          SignIn
-        </Button>
-        <Button aria-label='signup' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='dismiss'>SignUp</Button>
+        <Button aria-label='signin' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>SignIn</Button>
+        <Button aria-label='signup' type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>SignUp</Button>
       </HomeContainer>
   );
 };
