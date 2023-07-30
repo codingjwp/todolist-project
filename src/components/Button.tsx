@@ -35,14 +35,14 @@ export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $open, iconName
 const btnTheme = {
   "primary": css`
     background-color: #2929FF;
-    &:hover {
-      filter: brightness(.8);
+    &:not(:disabled):hover {
+      background-color: #0000C6;
     }
   `,
   "dismiss": css`
     background-color: #B31010;
-    &:hover {
-      filter: brightness(.8);
+    &:not(:disabled):hover {
+      background-color: #840C0C;
     }
   `
 };
@@ -80,4 +80,7 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
       margin-right: .2rem;
     }
   `}
+  &:disabled {
+    opacity: 0.7;
+  }
 `

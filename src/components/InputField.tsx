@@ -41,6 +41,7 @@ const InputFieldBase = styled.input<{$ishidden?: boolean}>`
   width: 100%;
   font-size: 1.2rem;
   padding: .3rem;
+  border-radius: 5px;
   border: 1px solid black;
   ${props => props.$ishidden === true && css`
     display: none;
