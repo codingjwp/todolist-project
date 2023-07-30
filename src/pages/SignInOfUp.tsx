@@ -1,19 +1,23 @@
-import { FormEvent, KeyboardEvent } from 'react';
+import { FormEvent } from 'react';
 import { InputField } from '../components/InputField';
 import { Button } from '../components/Button';
 import styled, { css } from 'styled-components';
 import { useValidation } from '../hooks/useValidation';
-
+import { postSignInOfUp } from '../apis/TodoAxios'; 
 interface SignInOfUpProps {
   titles: string
 }
 
 const SignInOfUp = ({titles}: SignInOfUpProps) => {
   const [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] = useValidation();
-  const PostSignInOfUpApi = (e: FormEvent) => {
+  const PostSignInOfUpApi = async (e: FormEvent) => {
     e.preventDefault();
-    const path = titles.replace(/ /g, "") .toLowerCase();
-    // API 기능
+    const form = new FormData(e.target as HTMLFormElement);
+    const data = await postSignInOfUp({
+      url: titles.replace(/ /g, "") .toLowerCase(),
+      email: form.get('email') as string,
+      password: form.get('password') as string,
+    });
   }
   
   return (
@@ -21,12 +25,12 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
       <SignInOfUpTitle>{titles}</SignInOfUpTitle>
       <SignInOfUpSpan>
         <SignInOfUpWarring $position='up'>Email</SignInOfUpWarring>
-        <InputField aria-label='signinofup-input' type='text' onChange={changeEmailData} />
+        <InputField aria-label='signinofup-email' name="email" type='text' onChange={changeEmailData} />
         <SignInOfUpWarring $visible={isEmail} >Email에 @를 포함시켜주세요.</SignInOfUpWarring>
       </SignInOfUpSpan>
       <SignInOfUpSpan>
         <SignInOfUpWarring $position='up'>Password</SignInOfUpWarring>
-        <InputField aria-label='signinofup-pw'type='password' onChange={changePasswordData} />
+        <InputField aria-label='signinofup-pw' name='password' type='password' onChange={changePasswordData} />
         <SignInOfUpWarring $visible={isPassword}>Password는 8자 이상입니다.</SignInOfUpWarring>
       </SignInOfUpSpan>
       <Button aria-label='signinofup-btn' disabled={isDisable} type='submit' $size='large' $btnType='primary'>{titles}</Button>

@@ -3,6 +3,7 @@ import GlobalStyles from './styles/GlobalStyles';
 import Layout from './styles/Layout';
 import Home from './pages/Home';
 import SignInOfUp from './pages/SignInOfUp';
+import Modal from './components/Modal';
 
 export const routerElement = [
   {
