@@ -2,7 +2,7 @@ import { FC, SVGProps } from "react";
 import svg from '../assets/btnicon.svg'
 
 export interface SvgIconProps extends SVGProps<SVGSVGElement> {
-  iconName: "btn-edit" | "btn-delete" | "btn-send" | "btn-send-cancel" | "btn-uparrow";
+  iconName: "btn-edit" | "btn-delete" | "btn-send" | "btn-send-cancel" | "btn-uparrow" | "btn-close";
 }
 
 export const SvgIcon: FC<SvgIconProps> = ({iconName, ...props}) => {

@@ -1,23 +1,40 @@
 import { FormEvent } from 'react';
-import { InputField } from '../components/InputField';
-import { Button } from '../components/Button';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { Button } from '../components/Button';
+import { InputField } from '../components/InputField';
 import { useValidation } from '../hooks/useValidation';
-import { postSignInOfUp } from '../apis/TodoAxios'; 
+import { postSignInOfUp } from '../apis/TodoAxios';
+import { useModalState } from '../apis/ModalContent';
+
 interface SignInOfUpProps {
   titles: string
 }
 
 const SignInOfUp = ({titles}: SignInOfUpProps) => {
+  const navigete = useNavigate();
   const [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] = useValidation();
+  const { setModalData } = useModalState();
+
   const PostSignInOfUpApi = async (e: FormEvent) => {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
-    const data = await postSignInOfUp({
+    const token = await postSignInOfUp({
       url: titles.replace(/ /g, "") .toLowerCase(),
       email: form.get('email') as string,
       password: form.get('password') as string,
     });
+    if (token.status >= 400) {
+      setModalData({
+        modalOpen: true,
+        modalType: "error",
+        modalMsg: token.data,
+      })
+      return ;
+    }
+    if (token.status === 200) 
+      localStorage.setItem('access_token', token.data.access_token);
+    navigete(token.status === 200 ? '/todo' : '/signin');
   }
   
   return (
@@ -38,7 +55,6 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
   );
 }
 
-
 const SignInOfUpForm = styled.form`
   width: 100%;
   height: 100%;
@@ -51,7 +67,6 @@ const SignInOfUpSpan = styled.span`
   width: 100%;
 `;
 const SignInOfUpWarring = styled.p<{$visible?: boolean, $position?: string}>`
-  
   font-weight: 540;
   opacity: ${({$visible}) => $visible === true && 0 };
   ${({$position}) => $position === 'up' ? css`
@@ -67,5 +82,4 @@ const SignInOfUpTitle = styled.h1`
   text-align: center;
   width: 100%;
 `
-
 export default SignInOfUp;

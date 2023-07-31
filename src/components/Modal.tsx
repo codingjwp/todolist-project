@@ -1,5 +1,7 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import { useRef, MouseEvent, useState } from 'react';
+import { SvgIcon } from './SvgIcon';
+import { useModalState } from '../apis/ModalContent';
 
 interface ModalProps {
   $isopen: boolean;
@@ -9,28 +11,36 @@ interface ModalProps {
 
 const Modal = ({$isopen, $type, modalMessage}: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const [isClose, setIsClose] = useState(true);
-  const modalClose = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target !== modalRef.current) setIsClose((prev) => !prev);
+  const { setModalData } = useModalState();
+  
+  const modalClose = (e: MouseEvent) => {
+    if (e.target !== modalRef.current) 
+      setModalData({
+        modalOpen: false,
+        modalType: "sucess",
+        modalMsg: "",
+      });
   }
 
   return (
-    <ModalBase $isopen={$isopen && isClose} onClick={modalClose}>
-      <ModalContextBase $type={$type} ref={modalRef}>
+    <ModalBase $isopen={$isopen} onClick={modalClose}>
+      <ModalContentBase $type={$type} ref={modalRef}>
         {modalMessage}
-      </ModalContextBase>
+        <ModalClose iconName='btn-close' fill='#ffffff' onClick={modalClose} />
+      </ModalContentBase>
     </ModalBase>
   )
 }
 
-const modalType = {
-  "sucess": css`
-    background-color: #10B310;
-  `,
-  "error": css`
-    background-color: #B31010;
-  `
-}
+const ModalClose = styled(SvgIcon)`
+  position: fixed;
+  top: .8rem;
+  right: .3rem;
+  transform: rotate(45deg);
+  &:hover {
+    fill: #cccccc;
+  }
+`
 
 const ModalBase = styled.div<{$isopen: boolean}>`
   display: ${({$isopen}) => $isopen === false && 'none'};
@@ -43,17 +53,19 @@ const ModalBase = styled.div<{$isopen: boolean}>`
   z-index: 10;
 `
 
-const ModalContextBase = styled.div<{$type: "sucess" | "error"}>`
+const ModalContentBase = styled.div<{$type: "sucess" | "error"}>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  word-break: break-all;
   width: 24rem;
-  padding: 2rem 2rem;
+  min-height: 4rem;
+  padding: 1rem 2rem;
   border-radius: 0.5rem;
   font-size: 1.2rem;
   color: #ffffff;
-  ${({$type}) => modalType[$type]};
+  background-color: ${({$type}) => $type === "sucess" ? '#10B310' : '#B31010'};
   z-index: 11;
 `
 export default Modal;

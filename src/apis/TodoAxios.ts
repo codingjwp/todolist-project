@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const getAcessToken = () => {
   return localStorage.getItem("access_token");
@@ -12,15 +12,6 @@ todoAxios.interceptors.request.use(
     const token = getAcessToken();
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-todoAxios.interceptors.response.use(
-  (error) => {
-    return Promise.reject(error);
   }
 );
 
@@ -31,6 +22,19 @@ interface PostSignInOfUpPRops {
 }
 
 export const postSignInOfUp = async ({url, email, password}: PostSignInOfUpPRops) => {
+  try{
     const res = await todoAxios.post(`auth/${url}`, { email, password });
-    return res;
+    const data = {
+      status: res.status,
+      data: res.data
+    }
+    return data;
+  } catch(error) {
+    const res = (error as AxiosError).response?.data as any;
+    const data = {
+        status: res.statusCode || 400,
+        data: res.message || "에러가 발생하였습니다.",
+    }
+    return data;
+  } 
 }

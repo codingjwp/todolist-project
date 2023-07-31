@@ -6,7 +6,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  return <LayoutContainer>{children}</LayoutContainer>;
+  return <LayoutContainer className='app'>{children}</LayoutContainer>;
 };
 
 const LayoutContainer = styled.div`
