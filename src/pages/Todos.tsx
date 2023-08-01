@@ -1,5 +1,9 @@
+import TodoCreate from "../components/TodoCreate";
+
 const Todos = () => {
-  return <div>todos</div>
+  return (
+    <TodoCreate />
+  )
 }
 
 export default Todos;

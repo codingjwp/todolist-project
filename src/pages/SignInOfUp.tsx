@@ -5,7 +5,7 @@ import { Button } from '../components/Button';
 import { InputField } from '../components/InputField';
 import { useValidation } from '../hooks/useValidation';
 import { postSignInOfUp } from '../apis/TodoAxios';
-import { useModalState } from '../apis/ModalContent';
+import { useModalState } from '../apis/ModalContext';
 
 interface SignInOfUpProps {
   titles: string
