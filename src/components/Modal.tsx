@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { useRef, MouseEvent, useState } from 'react';
+import { useRef, MouseEvent } from 'react';
 import { SvgIcon } from './SvgIcon';
-import { useModalState } from '../apis/ModalContent';
+import { useModalState } from '../apis/ModalContext';
 
 interface ModalProps {
   $isopen: boolean;

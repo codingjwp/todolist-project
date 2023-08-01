@@ -5,13 +5,13 @@ import {SvgIcon, SvgIconProps} from './SvgIcon';
 interface ButtonStyleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   $size: "basic" | "large" | "circle";
   $btnType: "primary" | "dismiss";
-  $open?: "ok" | "no";
-  $isIcon?: "ok" | "no";
+  $open?: boolean;
+  $isIconOfText?: "ok" | "no";
 }
 
-export const Button: FC<ButtonStyleProps> = ({$size, $btnType, $open, ...props}) => {
+export const Button: FC<ButtonStyleProps> = ({$size, $isIconOfText="no", $btnType, $open, ...props}) => {
   return (
-    <ButtonStyle $isIcon={"no"} $size={$size} $btnType={$btnType} $open={$open} {...props}>
+    <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} $open={$open} {...props}>
       {props.children}
     </ButtonStyle>
   )
@@ -23,10 +23,11 @@ interface IconStyleProps extends ButtonStyleProps {
   iconName: SvgIconProps["iconName"];
 }
 
-export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $open, iconName, iconScale, iconFill, ...props}) => {
+export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $isIconOfText="ok", $open, iconName, iconScale, iconFill, ...props}) => {
+  // transform={`rotate(180deg) scale(${iconScale || 1})`}
   return (
-    <ButtonStyle $isIcon={"ok"} $size={$size} $btnType={$btnType} $open={$open} {...props}>
-      <SvgIcon iconName={iconName} transform={`scale(${iconScale})`} fill={iconFill} />
+    <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} $open={$open} {...props}>
+      <SvgIcon iconName={iconName} transform={`rotate(${$open ? '180 0 2': '0 0 0'}) scale(${iconScale || 1})`} fill={iconFill} />
       {props.children}
     </ButtonStyle>
   )
@@ -61,17 +62,27 @@ const btnSize = {
     font-size: 1.2rem;
   `,
   "circle": css`
+    position: fixed;
+    left: 50%;
+    bottom: -2rem;
+    transition: .5s;
     width: 4rem;
+    height: 4rem;
     border-radius: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
   `,
 }
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
   cursor: pointer;
   color: #ffffff;
+  &:disabled {
+    opacity: 0.7;
+  }
   ${({$size}) => btnSize[$size]};
   ${({$btnType}) => btnTheme[$btnType]};
-  ${({$isIcon}) => $isIcon === "ok" && css`
+  ${({$isIconOfText}) => $isIconOfText === "ok" && css`
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -80,7 +91,5 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
       margin-right: .2rem;
     }
   `}
-  &:disabled {
-    opacity: 0.7;
-  }
+  
 `

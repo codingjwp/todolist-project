@@ -9,9 +9,9 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>{
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({type, ...props}, ref) => {
     return (
-      <label>
+      <InputLabel>
         <InputFieldBase ref={ref} type={type} {...props} />
-      </label>
+      </InputLabel>
     );
 });
 
@@ -35,6 +35,10 @@ const CheckBoxBase = styled.div<{checked?: boolean}>`
   border: ${props => props.checked === true ? '2px solid #635994' : '2px solid #000000'};
   border-radius: 50%;
   cursor: pointer;
+`
+
+const InputLabel= styled.label`
+  width: 100%;
 `
 
 const InputFieldBase = styled.input<{$ishidden?: boolean}>`
