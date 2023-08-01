@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useState, ReactNode, useContext } from 'react'
+import { TodoProvider } from './TodoContext'
 
 interface ModalDataProps {
   modalOpen: boolean;
@@ -21,7 +22,9 @@ export const ModalProvider = ({children}: {children: ReactNode}) => {
   
   return (
     <ModalContext.Provider value={{modalData, setModalData}}>
-      {children}
+      <TodoProvider>
+        {children}
+      </TodoProvider>
     </ModalContext.Provider>
   )
 }
@@ -29,7 +32,7 @@ export const ModalProvider = ({children}: {children: ReactNode}) => {
 export const useModalState = () => {
   const modalState = useContext(ModalContext);
   if (!modalState)
-    throw new Error('Cannot find IssueProvider');
+    throw new Error('Cannot find modalProvider');
   const modalOpen = modalState.modalData.modalOpen;
   const modalType = modalState.modalData.modalType;
   const modalMsg = modalState.modalData.modalMsg;

@@ -38,3 +38,23 @@ export const postSignInOfUp = async ({url, email, password}: PostSignInOfUpPRops
     return data;
   } 
 }
+
+export const postTodoCreate = async (todoContent: string) => {
+  try{
+    const res = await todoAxios.post('/todos', {
+      todo: todoContent
+    })
+    const data = {
+      status: res.status,
+      data: res.data
+    }
+    return data;
+  } catch(error) {
+    const res = (error as AxiosError).response?.data as any;
+    const data = {
+        status: res.statusCode || 400,
+        data: res.message || "에러가 발생하였습니다.",
+    }
+    return data;
+  }
+}
