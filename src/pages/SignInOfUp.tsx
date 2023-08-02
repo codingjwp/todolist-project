@@ -18,11 +18,12 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
 
   const PostSignInOfUpApi = async (e: FormEvent) => {
     e.preventDefault();
-    const form = new FormData(e.target as HTMLFormElement);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
     const token = await postSignInOfUp({
       url: titles.replace(/ /g, "") .toLowerCase(),
-      email: form.get('email') as string,
-      password: form.get('password') as string,
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
     });
     if (token.status >= 400) {
       setModalData({
@@ -30,11 +31,13 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
         modalType: "error",
         modalMsg: token.data,
       })
+      form.reset();
       return ;
     }
     if (token.status === 200) 
       localStorage.setItem('access_token', token.data.access_token);
     navigete(token.status === 200 ? '/todo' : '/signin');
+    form.reset();
   }
   
   return (

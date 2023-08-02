@@ -24,7 +24,6 @@ interface IconStyleProps extends ButtonStyleProps {
 }
 
 export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $isIconOfText="ok", $open, iconName, iconScale, iconFill, ...props}) => {
-  // transform={`rotate(180deg) scale(${iconScale || 1})`}
   return (
     <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} $open={$open} {...props}>
       <SvgIcon iconName={iconName} transform={`rotate(${$open ? '180 0 2': '0 0 0'}) scale(${iconScale || 1})`} fill={iconFill} />

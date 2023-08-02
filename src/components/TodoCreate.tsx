@@ -16,8 +16,9 @@ const TodoCreate = () => {
   }
   const postTodoCreateApi = async (e: FormEvent) => {
     e.preventDefault();
-    const form = new FormData((e.target as HTMLFormElement));
-    const todoDetail = form.get('create');
+    const form = (e.target as HTMLFormElement);
+    const formData = new FormData(form);
+    const todoDetail = formData.get('create');
     const res = await postTodoCreate(todoDetail as string);
     if (res.status >= 400) {
       setModalData({
@@ -25,9 +26,11 @@ const TodoCreate = () => {
         modalType: "error",
         modalMsg: res.data,
       })
+      form.reset();
       return;
     }
     setTodoData((prev) => [...prev, res.data]);
+    form.reset();
   }
 
   return (

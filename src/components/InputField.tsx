@@ -4,7 +4,6 @@ import styled, {css} from 'styled-components';
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>{
   type?: "text" | "password";
-  $ishidden?: boolean;
 }
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({type, ...props}, ref) => {
@@ -15,10 +14,10 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({type, 
     );
 });
 
-export const CheckBoxField: FC<InputFieldProps> = ({$ishidden, type, ...props}) => {
+export const CheckBoxField: FC<InputFieldProps> = ({type, ...props}) => {
   return (
     <label>
-      <InputFieldBase type='checkbox' checked={props.checked} $ishidden={$ishidden} {...props}/>
+      <InputFieldBase type='checkbox' $ishidden={true} {...props}/>
       <CheckBoxBase checked={props.checked}>
         {props.checked ? '✔️' : ''}
       </CheckBoxBase>
