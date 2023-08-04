@@ -51,6 +51,9 @@ const GlobalStyles = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+    svg, use {
+        pointer-events: none;
+    }
 `;
 
 export default GlobalStyles;
