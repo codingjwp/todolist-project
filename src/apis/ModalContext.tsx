@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, createContext, useState, ReactNode, useContext } from 'react'
-import { TodoProvider } from './TodoContext'
 
 interface ModalDataProps {
   modalOpen: boolean;
@@ -22,9 +21,7 @@ export const ModalProvider = ({children}: {children: ReactNode}) => {
   
   return (
     <ModalContext.Provider value={{modalData, setModalData}}>
-      <TodoProvider>
         {children}
-      </TodoProvider>
     </ModalContext.Provider>
   )
 }
