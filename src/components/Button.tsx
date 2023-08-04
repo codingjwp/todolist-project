@@ -26,7 +26,7 @@ interface IconStyleProps extends ButtonStyleProps {
 export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $isIconOfText="ok", $open, iconName, iconScale, iconFill, ...props}) => {
   return (
     <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} $open={$open} {...props}>
-      <SvgIcon iconName={iconName} transform={`rotate(${$open ? '180 0 2': '0 0 0'}) scale(${iconScale || 1})`} fill={iconFill} />
+      <SvgIcon aria-label={props['aria-label']} iconName={iconName} transform={`rotate(${$open ? '180 0 2': '0 0 0'}) scale(${iconScale || 1})`} fill={iconFill} />
       {props.children}
     </ButtonStyle>
   )
@@ -49,10 +49,11 @@ const btnTheme = {
 
 const btnSize = {
   "basic": css`
-    width: 3.5rem;
+    min-width: 2rem;
     height: 2rem;
     border-radius: .325rem;
     font-size: .8rem;
+    margin-left: .5rem;
   `,
   "large": css`
     width: 100%;

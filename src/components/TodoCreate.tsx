@@ -1,25 +1,26 @@
 import { FormEvent, useState } from "react";
+import styled, {css} from 'styled-components';
 import { IconButton } from "./Button";
 import { InputField } from "./InputField";
-import { postTodoCreate } from '../apis/TodoAxios';
+import { createTodoList } from '../apis/TodoAxios';
 import { useModalState } from '../apis/ModalContext';
-import { useTodoState } from '../apis/TodoContext';
-import styled, {css} from 'styled-components';
+import { TodoStateProps } from "../hooks/useTodoEvent";
 
-const TodoCreate = () => {
+const TodoCreate = ({setTodoData}: TodoStateProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const btnType = isOpen ? "dismiss" : 'primary';
   const { setModalData } = useModalState();
-  const { setTodoData } = useTodoState();
   const createTodoOpen = () => {
     setIsOpen((prev) => !prev);
+    const form = document.querySelector('form');
+    form?.reset();
   }
   const postTodoCreateApi = async (e: FormEvent) => {
     e.preventDefault();
     const form = (e.target as HTMLFormElement);
     const formData = new FormData(form);
     const todoDetail = formData.get('create');
-    const res = await postTodoCreate(todoDetail as string);
+    const res = await createTodoList(todoDetail as string);
     if (res.status >= 400) {
       setModalData({
         modalOpen: true,

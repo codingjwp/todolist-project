@@ -36,6 +36,7 @@ const ModalClose = styled(SvgIcon)`
   position: fixed;
   top: .8rem;
   right: .3rem;
+  pointer-events: all;
   transform: rotate(45deg);
   &:hover {
     fill: #cccccc;

@@ -1,9 +1,11 @@
 import {FC, InputHTMLAttributes, forwardRef } from 'react';;
 import styled, {css} from 'styled-components';
+import { SvgIcon } from './SvgIcon';
 
 
 interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>{
   type?: "text" | "password";
+  isCompleted?: boolean;
 }
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({type, ...props}, ref) => {
@@ -14,30 +16,18 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({type, 
     );
 });
 
-export const CheckBoxField: FC<InputFieldProps> = ({type, ...props}) => {
+export const CheckBoxField: FC<InputFieldProps> = ({type, isCompleted, ...props}) => {
   return (
-    <label>
-      <InputFieldBase type='checkbox' $ishidden={true} {...props}/>
-      <CheckBoxBase checked={props.checked}>
-        {props.checked ? '✔️' : ''}
-      </CheckBoxBase>
-    </label>
+    <InputLabel $check='check'>
+      <InputFieldBase type='checkbox' $ishidden={true} defaultChecked={isCompleted} {...props}/>
+      <SvgIcon iconName={isCompleted ? 'checkbox' : 'uncheckbox'} fill={isCompleted ? '#2929FF' : '#000000'} />
+    </InputLabel>
   )
 } 
 
-const CheckBoxBase = styled.div<{checked?: boolean}>`
-  display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
-  text-align: center;
-  font-size: 1.1rem;
-  border: ${props => props.checked === true ? '2px solid #635994' : '2px solid #000000'};
-  border-radius: 50%;
-  cursor: pointer;
-`
-
-const InputLabel= styled.label`
-  width: 100%;
+const InputLabel= styled.label<{$check?: string}>`
+  width: ${props => props.$check !== 'check' && '100%'};
+  cursor: ${props => props.$check === 'check' && 'pointer'};
 `
 
 const InputFieldBase = styled.input<{$ishidden?: boolean}>`
@@ -47,6 +37,7 @@ const InputFieldBase = styled.input<{$ishidden?: boolean}>`
   border-radius: 5px;
   border: 1px solid black;
   ${props => props.$ishidden === true && css`
+    pointer-events: none;
     display: none;
   `}
 `;
