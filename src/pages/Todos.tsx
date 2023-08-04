@@ -1,13 +1,14 @@
 import TodoCreate from "../components/TodoCreate";
-import TodoItems from '../components/TodoItems';
+import TodoList from "../components/TodoList";
+import { useTodoEvent } from "../hooks/useTodoEvent";
 
 const Todos = () => {
+  const {todoData, setTodoData } = useTodoEvent()
   return (
     <>
-      <TodoItems />
-      <TodoCreate />
+      <TodoList todoData={todoData} setTodoData={setTodoData} />
+      <TodoCreate setTodoData={setTodoData} />
     </>
   )
 }
-
 export default Todos;

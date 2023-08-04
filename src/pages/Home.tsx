@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Home = () => {
   const navigate = useNavigate();
   const redirectToSignupOrLogin = (e: MouseEvent<HTMLButtonElement>) => {
-    const path = e.currentTarget.innerText.replace(/ /g, "").toLowerCase();
+    const path = (e.target as Element).getAttribute('aria-label') as string;
     navigate(path);
   };
 
