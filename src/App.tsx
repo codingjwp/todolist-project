@@ -4,6 +4,7 @@ import Layout from './styles/Layout';
 import Home from './pages/Home';
 import SignInOfUp from './pages/SignInOfUp';
 import Todos from './pages/Todos';
+import NotFound from './pages/NotFound';
 import Modal from './components/Modal';
 import { useModalState } from './apis/ModalContext';
 
@@ -21,7 +22,7 @@ export const routerElement = [
       <Layout>
         <Outlet />
       </Layout>),
-    errorElement: <div>error</div>,
+    errorElement: <NotFound />,
     children: [
       { index: true, element: <Home />, loader: async () => {return await hasToken('/')} },
       { path: 'signup', element: <SignInOfUp titles='Sign Up' />, loader: async () => {return await hasToken('signup')} },
