@@ -31,7 +31,6 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
         modalType: "error",
         modalMsg: token.data,
       })
-      form.reset();
       return ;
     }
     if (token.status === 200) 
@@ -68,6 +67,7 @@ const SignInOfUpForm = styled.form`
 `
 const SignInOfUpSpan = styled.span`
   width: 100%;
+  user-select: none;
 `;
 const SignInOfUpWarring = styled.p<{$visible?: boolean, $position?: string}>`
   font-weight: 540;
@@ -84,5 +84,6 @@ const SignInOfUpTitle = styled.h1`
   font-size: 3rem;
   text-align: center;
   width: 100%;
+  user-select: none;
 `
 export default SignInOfUp;
