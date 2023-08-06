@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Button } from '../components/Button';
 import { InputField } from '../components/InputField';
@@ -13,6 +13,7 @@ interface SignInOfUpProps {
 
 const SignInOfUp = ({titles}: SignInOfUpProps) => {
   const navigete = useNavigate();
+  const path = titles.replace(/ /g, "").toLowerCase();
   const [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] = useValidation();
   const { setModalData } = useModalState();
 
@@ -21,7 +22,7 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const token = await postSignInOfUp({
-      url: titles.replace(/ /g, "") .toLowerCase(),
+      url: path,
       email: formData.get('email') as string,
       password: formData.get('password') as string,
     });
@@ -52,6 +53,7 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
         <InputField aria-label='signinofup-pw' name='password' type='password' onChange={changePasswordData} />
         <SignInOfUpWarring $visible={isPassword}>Password는 8자 이상입니다.</SignInOfUpWarring>
       </SignInOfUpSpan>
+      <SignInOfUpSpan $type="link"><Link to={path === 'signin' ? '/signup' : '/signin'}>{path === 'signin' ? 'Sign Un' : 'Sign In'}</Link></SignInOfUpSpan>
       <Button aria-label='signinofup-btn' disabled={isDisable} type='submit' $size='large' $btnType='primary'>{titles}</Button>
     </SignInOfUpForm>
   );
@@ -65,9 +67,10 @@ const SignInOfUpForm = styled.form`
   justify-content: space-around;
   align-items: center;
 `
-const SignInOfUpSpan = styled.span`
+const SignInOfUpSpan = styled.span<{$type?: string}>`
   width: 100%;
   user-select: none;
+  text-align: ${({$type}) => $type === 'link' && 'right'};
 `;
 const SignInOfUpWarring = styled.p<{$visible?: boolean, $position?: string}>`
   font-weight: 540;
