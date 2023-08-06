@@ -15,6 +15,8 @@ export interface TodoStateProps {
 
 export const useTodoEvent = () => {
   const [todoData, setTodoData] = useState<TodoDataProps[]>([]);
+  const length = todoData.length;
+  const [pages, setPages] = useState(0);
   const { setModalData } = useModalState();
   const getTodoListApi = async () => {
     const res = await getTodoList();
@@ -26,6 +28,5 @@ export const useTodoEvent = () => {
   useEffect(() => {
     getTodoListApi();
   }, [])
-
-  return { todoData, setTodoData };
+  return { todoData: todoData.slice(pages * 9, (pages + 1) * 9), length, setTodoData, setPages };
 }
