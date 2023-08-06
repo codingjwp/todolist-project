@@ -13,7 +13,7 @@ const LayoutContainer = styled.div`
   width: 24rem;
   height: 31.25rem;
   padding: 4rem 2rem;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

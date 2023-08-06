@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, createContext, useState, ReactNode, useContex
 
 interface ModalDataProps {
   modalOpen: boolean;
-  modalType: "sucess" | "error";
+  modalType: "detail" | "error";
   modalMsg: string;
 }
 
@@ -15,7 +15,7 @@ const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 export const ModalProvider = ({children}: {children: ReactNode}) => {
   const [modalData, setModalData] = useState<ModalDataProps>({
     modalOpen: false,
-    modalType: "sucess",
+    modalType: "detail",
     modalMsg: "",
   })
   
