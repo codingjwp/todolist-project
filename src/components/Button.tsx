@@ -3,21 +3,21 @@ import styled, { css } from 'styled-components';
 import {SvgIcon, SvgIconProps} from './SvgIcon';
 
 interface ButtonStyleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  $size: "basic" | "large" | "circle";
-  $btnType: "primary" | "dismiss";
-  $open?: boolean;
+  $size: "basic" | "large" | "circle" | "mini";
+  $btnType: "primary" | "dismiss" | "sub";
+  $open?: boolean | "left" | "right";
   $isIconOfText?: "ok" | "no";
 }
 
-export const Button: FC<ButtonStyleProps> = ({$size, $isIconOfText="no", $btnType, $open, ...props}) => {
+export const Button: FC<ButtonStyleProps> = ({$size, $isIconOfText="no", $btnType, ...props}) => {
   return (
-    <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} $open={$open} {...props}>
+    <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} {...props}>
       {props.children}
     </ButtonStyle>
   )
 }
 
-interface IconStyleProps extends ButtonStyleProps {
+export interface IconStyleProps extends ButtonStyleProps {
   iconScale?: number;
   iconFill?: string;
   iconName: SvgIconProps["iconName"];
@@ -25,8 +25,8 @@ interface IconStyleProps extends ButtonStyleProps {
 
 export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $isIconOfText="ok", $open, iconName, iconScale, iconFill, ...props}) => {
   return (
-    <ButtonStyle $isIconOfText={$isIconOfText} $size={$size} $btnType={$btnType} $open={$open} {...props}>
-      <SvgIcon aria-label={props['aria-label']} iconName={iconName} transform={`rotate(${$open ? '180 0 2': '0 0 0'}) scale(${iconScale || 1})`} fill={iconFill} />
+    <ButtonStyle $isIconOfText={$isIconOfText} $open={$open} $size={$size} $btnType={$btnType} {...props}>
+      <SvgIcon aria-label={props['aria-label']} iconName={iconName} $open={`${$open ?? false}`} iconScale={iconScale} fill={iconFill} />
       {props.children}
     </ButtonStyle>
   )
@@ -44,6 +44,9 @@ const btnTheme = {
     &:not(:disabled):hover {
       background-color: #840C0C;
     }
+  `,
+  "sub": css`
+    background-color: #bfbfff;
   `
 };
 
@@ -72,6 +75,22 @@ const btnSize = {
     transform: translateX(-50%);
     z-index: 2;
   `,
+  "mini": css`
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    z-index: 2;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    &:hover, &:focus {
+      opacity: 1;
+    }
+  `
 }
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
@@ -91,5 +110,6 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
       margin-right: .2rem;
     }
   `}
-  
+  left: ${({$open}) => $open === 'left' && '-1.5rem'};
+  right: ${({$open}) => $open === 'right' && '-1.5rem'};
 `

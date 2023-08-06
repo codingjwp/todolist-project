@@ -12,15 +12,16 @@ interface TodoDataProps {
 }
 interface TodoDetailProps extends TodoDataProps {
     deleteTodoListApi: (id: string) => Promise<void>;
+    detailTodoOpen: (todo: string) => void;
 }
 
 
-const TodoDetail = ({id, isCompleted, todo, detailOfModify, deleteTodoListApi, updateTodoListApi}: TodoDetailProps) => {
+const TodoDetail = ({id, isCompleted, todo, detailOfModify, deleteTodoListApi, updateTodoListApi, detailTodoOpen}: TodoDetailProps) => {
 
     return(
         <TodoItemBase aria-label={`todo-detail-${id}`}>
             <CheckBoxField aria-label={`detail-check-${id}`} isCompleted={isCompleted} onClick={() => updateTodoListApi(id, !isCompleted, todo)} />
-            <TodoContent title={todo}>{todo}</TodoContent>
+            <TodoContent onClick={() => detailTodoOpen(todo)}>{todo}</TodoContent>
             <IconButton aria-label={`detail-edit-${id}`} iconName='btn-edit' iconFill='#ffffff' 
             type='button' $size='basic' $isIconOfText='no' $btnType='primary' onClick={detailOfModify} />
             <IconButton aria-label={`detail-delete-${id}`} iconName='btn-delete' iconFill='#ffffff' 
@@ -44,13 +45,13 @@ const TodoModify = ({id, isCompleted, todo, detailOfModify, updateTodoListApi}: 
         </TodoItemBase>)
 }
 
-const TodoItems = ({id, isCompleted, todo, deleteTodoListApi, updateTodoListApi}: TodoDetailProps) => {
+const TodoItems = ({id, isCompleted, todo, deleteTodoListApi, updateTodoListApi, detailTodoOpen}: TodoDetailProps) => {
     const [change, setChange] = useState(true);
     const detailOfModify = () => {setChange((prev) => !prev)}
 
     return (
         change ? 
-        <TodoDetail id={id} isCompleted={isCompleted} todo={todo} detailOfModify={detailOfModify} deleteTodoListApi={deleteTodoListApi} updateTodoListApi={updateTodoListApi} />
+        <TodoDetail id={id} isCompleted={isCompleted} todo={todo} detailOfModify={detailOfModify} deleteTodoListApi={deleteTodoListApi} updateTodoListApi={updateTodoListApi} detailTodoOpen={detailTodoOpen} />
         : <TodoModify id={id} isCompleted={isCompleted} todo={todo} detailOfModify={detailOfModify} updateTodoListApi={updateTodoListApi} />
     );
 }
@@ -68,5 +69,7 @@ const TodoContent = styled.span`
     margin-left: .4rem;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
+    user-select: none;
 `
 export default TodoItems;

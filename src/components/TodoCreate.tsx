@@ -30,7 +30,7 @@ const TodoCreate = ({setTodoData}: TodoStateProps) => {
       form.reset();
       return;
     }
-    setTodoData((prev) => [...prev, res.data]);
+    setTodoData((prev) => [res.data, ...prev]);
     form.reset();
   }
 

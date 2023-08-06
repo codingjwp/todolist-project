@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useRef, MouseEvent } from 'react';
 import { SvgIcon } from './SvgIcon';
 import { useModalState } from '../apis/ModalContext';
 
 interface ModalProps {
   $isopen: boolean;
-  $type: "sucess" | "error";
+  $type:  "detail" | "error";
   modalMessage: string;
 }
 
@@ -17,7 +17,7 @@ const Modal = ({$isopen, $type, modalMessage}: ModalProps) => {
     if (e.target !== modalRef.current) 
       setModalData({
         modalOpen: false,
-        modalType: "sucess",
+        modalType: "detail",
         modalMsg: "",
       });
   }
@@ -26,20 +26,21 @@ const Modal = ({$isopen, $type, modalMessage}: ModalProps) => {
     <ModalBase $isopen={$isopen} onClick={modalClose}>
       <ModalContentBase $type={$type} ref={modalRef}>
         {modalMessage}
-        <ModalClose iconName='btn-close' fill='#ffffff' onClick={modalClose} />
+        <ModalClose iconName='btn-close' $open='false' $type={$type} onClick={modalClose} />
       </ModalContentBase>
     </ModalBase>
   )
 }
 
-const ModalClose = styled(SvgIcon)`
+const ModalClose = styled(SvgIcon)<{$type: "detail" | "error"}>`
   position: fixed;
   top: .8rem;
   right: .3rem;
   pointer-events: all;
+  fill: ${({$type}) => $type === "error" ? '#ffffff' : '#000000'} ;
   transform: rotate(45deg);
   &:hover {
-    fill: #cccccc;
+    fill: ${({$type}) => $type === "error" ? '#cccccc' : '#555555'} ; ;
   }
 `
 
@@ -54,7 +55,7 @@ const ModalBase = styled.div<{$isopen: boolean}>`
   z-index: 10;
 `
 
-const ModalContentBase = styled.div<{$type: "sucess" | "error"}>`
+const ModalContentBase = styled.div<{$type: "detail" | "error"}>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -65,8 +66,8 @@ const ModalContentBase = styled.div<{$type: "sucess" | "error"}>`
   padding: 1rem 2rem;
   border-radius: 0.5rem;
   font-size: 1.2rem;
-  color: #ffffff;
-  background-color: ${({$type}) => $type === "sucess" ? '#10B310' : '#B31010'};
+  color: ${({$type}) => $type === "error" ? '#ffffff' : '#000000'} ;
+  background-color: ${({$type}) => $type === "error" ? '#B31010' : '#e5e7eb'};
   z-index: 11;
 `
 export default Modal;

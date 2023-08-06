@@ -31,12 +31,15 @@ const TodoList = ({ todoData, setTodoData }: TodoListPRops) => {
       })});
     }
   }
+  const detailTodoOpen = (todo: string) => {
+    setModalData({ modalOpen: true, modalType: "detail", modalMsg: todo})
+  }
 
   return (
     <>
       {todoData && todoData.map((item) => { 
         return <TodoItems key={item.id} id={item.id} isCompleted={item.isCompleted} todo={item.todo}
-          deleteTodoListApi={deleteTodoListApi} updateTodoListApi={updateTodoListApi} />
+          deleteTodoListApi={deleteTodoListApi} updateTodoListApi={updateTodoListApi} detailTodoOpen={detailTodoOpen} />
       })}
     </>
   );
