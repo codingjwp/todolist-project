@@ -53,7 +53,7 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
         <InputField aria-label='signinofup-pw' name='password' type='password' onChange={changePasswordData} />
         <SignInOfUpWarring $visible={isPassword}>Password는 8자 이상입니다.</SignInOfUpWarring>
       </SignInOfUpSpan>
-      <SignInOfUpSpan $type="link"><Link to={path === 'signin' ? '/signup' : '/signin'}>{path === 'signin' ? 'Sign Un' : 'Sign In'}</Link></SignInOfUpSpan>
+      <SignInOfUpSpan $type="link"><Link to={path === 'signin' ? '/signup' : '/signin'}>{path === 'signin' ? 'Sign Up' : 'Sign In'}</Link></SignInOfUpSpan>
       <Button aria-label='signinofup-btn' disabled={isDisable} type='submit' $size='large' $btnType='primary'>{titles}</Button>
     </SignInOfUpForm>
   );

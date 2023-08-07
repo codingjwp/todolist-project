@@ -18,6 +18,8 @@ export const useTodoEvent = () => {
   const length = todoData.length;
   const [pages, setPages] = useState(0);
   const { setModalData } = useModalState();
+  const todoSort = todoData.sort((a, b) => {return +b.id - +a.id}).slice(pages * 9, (pages + 1) * 9);
+
   const getTodoListApi = async () => {
     const res = await getTodoList();
     if (res.status >= 400)
@@ -28,5 +30,5 @@ export const useTodoEvent = () => {
   useEffect(() => {
     getTodoListApi();
   }, [])
-  return { todoData: todoData.slice(pages * 9, (pages + 1) * 9), length, setTodoData, setPages };
+  return { todoData: todoSort, length, setTodoData, setPages };
 }

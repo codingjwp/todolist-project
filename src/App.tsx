@@ -6,7 +6,6 @@ import SignInOfUp from './pages/SignInOfUp';
 import Todos from './pages/Todos';
 import NotFound from './pages/NotFound';
 import Modal from './components/Modal';
-import { useModalState } from './apis/ModalContext';
 
 const hasToken = async (path: string) => {
   const token = localStorage.getItem('access_token') ? true : false;

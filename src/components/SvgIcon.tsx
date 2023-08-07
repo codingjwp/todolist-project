@@ -3,11 +3,11 @@ import svg from '../assets/btnicon.svg'
 
 export interface SvgIconProps extends SVGProps<SVGSVGElement> {
   iconName: "btn-edit" | "btn-delete" | "btn-send" | "btn-send-cancel" | "btn-uparrow" | "btn-close" | "checkbox" | "uncheckbox";
-  $direction: "up" | "down" | "left" | "right";
+  $direction?: "up" | "down" | "left" | "right";
   
 }
 
-export const SvgIcon: FC<SvgIconProps> = ({iconName, $direction, ...props}) => {
+export const SvgIcon: FC<SvgIconProps> = ({iconName, $direction="down", ...props}) => {
   const rotate = {
     "up": `rotate(180 0 2)`,
     "down": `rotate(0 0 0)`,

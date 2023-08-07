@@ -88,7 +88,7 @@ const btnSize = {
     border-radius: 50%;
     opacity: 0;
     transition: opacity 0.3s ease-out;
-    &:hover, &:focus {
+    &:hover {
       opacity: 1;
     }
   `
