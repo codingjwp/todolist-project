@@ -9,10 +9,10 @@ const Todos = () => {
     <>
       <TodoList todoData={todoData} setTodoData={setTodoData} />
       <TodoCreate setTodoData={setTodoData} />
-      <IconButton type="button" $size='mini' $btnType='sub' $isIconOfText='no'
-        $open='left' iconName='btn-uparrow' iconFill='#000000' onClick={() => setPages((prev) => {return prev === 0 ? prev : prev -1 })}/>
-      <IconButton type="button" $size='mini' $btnType='sub' $isIconOfText='no'
-        $open='right' iconName='btn-uparrow' iconFill='#000000' onClick={() => setPages((prev) => {return (length / 9) - 1 <= prev ? prev : prev + 1 })} />
+      <IconButton type="button" $size='mini' $btnType='sub' $isIconOfText='no' iconWidth="24" iconHeight="24" 
+        $direction='left' iconName='btn-uparrow' iconFill='#000000' onClick={() => setPages((prev) => {return prev === 0 ? prev : prev -1 })}/>
+      <IconButton type="button" $size='mini' $btnType='sub' $isIconOfText='no' iconWidth="24" iconHeight="24" 
+        $direction='right' iconName='btn-uparrow' iconFill='#000000' onClick={() => setPages((prev) => {return (length / 9) - 1 <= prev ? prev : prev + 1 })} />
     </>
   )
 }

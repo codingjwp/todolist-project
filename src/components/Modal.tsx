@@ -1,32 +1,22 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useRef, MouseEvent } from 'react';
 import { SvgIcon } from './SvgIcon';
 import { useModalState } from '../apis/ModalContext';
 
-interface ModalProps {
-  $isopen: boolean;
-  $type:  "detail" | "error";
-  modalMessage: string;
-}
-
-const Modal = ({$isopen, $type, modalMessage}: ModalProps) => {
+const Modal = () => {
   const modalRef = useRef<HTMLDivElement>(null);
-  const { setModalData } = useModalState();
+  const { modalOpen, modalType, modalMsg, setModalData } = useModalState();
   
   const modalClose = (e: MouseEvent) => {
     if (e.target !== modalRef.current) 
-      setModalData({
-        modalOpen: false,
-        modalType: "detail",
-        modalMsg: "",
-      });
+      setModalData({ modalOpen: false, modalType: "detail", modalMsg: "" });
   }
 
   return (
-    <ModalBase $isopen={$isopen} onClick={modalClose}>
-      <ModalContentBase $type={$type} ref={modalRef}>
-        {modalMessage}
-        <ModalClose iconName='btn-close' $open='false' $type={$type} onClick={modalClose} />
+    <ModalBase $isopen={modalOpen} onClick={modalClose}>
+      <ModalContentBase $type={modalType} ref={modalRef}>
+        {modalMsg}
+        <ModalClose iconName='btn-close' $direction='down' $type={modalType} onClick={modalClose} />
       </ModalContentBase>
     </ModalBase>
   )

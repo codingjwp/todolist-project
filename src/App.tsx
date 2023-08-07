@@ -33,12 +33,12 @@ export const routerElement = [
 
 function App() {
   const routers = createBrowserRouter(routerElement);
-  const {modalOpen, modalType, modalMsg} = useModalState();
+  // const {modalOpen, modalType, modalMsg} = useModalState();
   return (
     <>
       <GlobalStyles />
       <RouterProvider router={routers} />
-      <Modal $isopen={modalOpen} $type={modalType} modalMessage={modalMsg} />
+      <Modal />
     </>
   );
 }

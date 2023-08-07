@@ -22,9 +22,9 @@ const TodoDetail = ({id, isCompleted, todo, detailOfModify, deleteTodoListApi, u
         <TodoItemBase aria-label={`todo-detail-${id}`}>
             <CheckBoxField aria-label={`detail-check-${id}`} isCompleted={isCompleted} onClick={() => updateTodoListApi(id, !isCompleted, todo)} />
             <TodoContent onClick={() => detailTodoOpen(todo)}>{todo}</TodoContent>
-            <IconButton aria-label={`detail-edit-${id}`} iconName='btn-edit' iconFill='#ffffff' 
+            <IconButton aria-label={`detail-edit-${id}`} iconName='btn-edit' iconFill='#ffffff' iconWidth="24" iconHeight="24" 
             type='button' $size='basic' $isIconOfText='no' $btnType='primary' onClick={detailOfModify} />
-            <IconButton aria-label={`detail-delete-${id}`} iconName='btn-delete' iconFill='#ffffff' 
+            <IconButton aria-label={`detail-delete-${id}`} iconName='btn-delete' iconFill='#ffffff' iconWidth="24" iconHeight="24" 
             type='button' $size='basic' $isIconOfText='no' $btnType='dismiss' onClick={() => deleteTodoListApi(id)} />
         </TodoItemBase>)
 }
@@ -34,13 +34,13 @@ const TodoModify = ({id, isCompleted, todo, detailOfModify, updateTodoListApi}: 
     return (
         <TodoItemBase aria-label={`todo-modify-${id}`}>
             <InputField ref={modifyRef} aria-label={`modify-text-${id}`} name={`modify-text-${id}`} type='text' defaultValue={todo} />
-            <IconButton aria-label={`modify-send-${id}`} iconName='btn-send' iconFill='#ffffff' 
+            <IconButton aria-label={`modify-send-${id}`} iconName='btn-send' iconFill='#ffffff' iconWidth="24" iconHeight="24" 
             type='button' $size='basic' $isIconOfText='no' $btnType='primary' onClick={() => {
                  updateTodoListApi(id, isCompleted, (modifyRef.current as HTMLInputElement).value);
                  if (detailOfModify) detailOfModify();
                 }
                 } />
-            <IconButton aria-label={`modify-cancel-${id}`} iconName='btn-send-cancel' iconFill='#ffffff' 
+            <IconButton aria-label={`modify-cancel-${id}`} iconName='btn-send-cancel' iconFill='#ffffff' iconWidth="24" iconHeight="24" 
             type='button' $size='basic' $isIconOfText='no' $btnType='dismiss' onClick={detailOfModify} />
         </TodoItemBase>)
 }

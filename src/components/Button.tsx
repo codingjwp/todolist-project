@@ -5,7 +5,7 @@ import {SvgIcon, SvgIconProps} from './SvgIcon';
 interface ButtonStyleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   $size: "basic" | "large" | "circle" | "mini";
   $btnType: "primary" | "dismiss" | "sub";
-  $open?: boolean | "left" | "right";
+  $direction?: "up" | "down" | "left" | "right";
   $isIconOfText?: "ok" | "no";
 }
 
@@ -18,15 +18,16 @@ export const Button: FC<ButtonStyleProps> = ({$size, $isIconOfText="no", $btnTyp
 }
 
 export interface IconStyleProps extends ButtonStyleProps {
-  iconScale?: number;
   iconFill?: string;
   iconName: SvgIconProps["iconName"];
+  iconWidth?: string,
+  iconHeight?: string,
 }
 
-export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $isIconOfText="ok", $open, iconName, iconScale, iconFill, ...props}) => {
+export const IconButton: FC<IconStyleProps> = ({$size, $btnType, $isIconOfText="ok", $direction, iconName, iconFill, iconWidth, iconHeight, ...props}) => {
   return (
-    <ButtonStyle $isIconOfText={$isIconOfText} $open={$open} $size={$size} $btnType={$btnType} {...props}>
-      <SvgIcon aria-label={props['aria-label']} iconName={iconName} $open={`${$open ?? false}`} iconScale={iconScale} fill={iconFill} />
+    <ButtonStyle $isIconOfText={$isIconOfText} $direction={$direction} $size={$size} $btnType={$btnType} {...props}>
+      <SvgIcon aria-label={props['aria-label']} iconName={iconName} $direction={$direction || 'down'} width={iconWidth} height={iconHeight}  fill={iconFill} />
       {props.children}
     </ButtonStyle>
   )
@@ -110,6 +111,6 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
       margin-right: .2rem;
     }
   `}
-  left: ${({$open}) => $open === 'left' && '-1.5rem'};
-  right: ${({$open}) => $open === 'right' && '-1.5rem'};
+  left: ${({$direction}) => $direction === 'left' && '-1.5rem'};
+  right: ${({$direction}) => $direction === 'right' && '-1.5rem'};
 `

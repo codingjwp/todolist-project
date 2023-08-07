@@ -6,12 +6,14 @@ import { createTodoList } from '../apis/TodoAxios';
 import { useModalState } from '../apis/ModalContext';
 import { TodoStateProps } from "../hooks/useTodoEvent";
 
+type IsOpenType = "up" | "down";
+
 const TodoCreate = ({setTodoData}: TodoStateProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const btnType = isOpen ? "dismiss" : 'primary';
+  const [isOpen, setIsOpen] = useState<IsOpenType>('down');
+  const btnType = isOpen === 'up' ? "dismiss" : 'primary';
   const { setModalData } = useModalState();
   const createTodoOpen = () => {
-    setIsOpen((prev) => !prev);
+    setIsOpen((prev) => prev === 'up' ? 'down' : 'up');
     const form = document.querySelector('form');
     form?.reset();
   }
@@ -39,26 +41,26 @@ const TodoCreate = ({setTodoData}: TodoStateProps) => {
     <ToDoCreateBase $isopen={isOpen} onSubmit={postTodoCreateApi}>
       <InputField aria-label="create-todo-text" name="create" type="text" />
       <IconButton aria-label="create-todo-btn" type="submit" $size="basic" $btnType="primary"
-      iconName="btn-send" iconFill='#ffffff' $isIconOfText="no" />
+      iconName="btn-send" iconFill='#ffffff' $isIconOfText="no" iconWidth="24" iconHeight="24" />
     </ToDoCreateBase>
-    <IconButton aria-label="create-todo-btn" type="button" iconName="btn-uparrow" iconScale={1.5} iconFill="#ffffff" 
-    $size="circle" $btnType={btnType} $open={isOpen} $isIconOfText={"no"} onClick={createTodoOpen}/>
+    <IconButton aria-label="create-todo-btn" type="button" iconName="btn-uparrow" iconWidth="48" iconHeight="48" iconFill="#ffffff" 
+    $size="circle" $btnType={btnType} $direction={isOpen} $isIconOfText={"no"} onClick={createTodoOpen}/>
   </>
   )
 }
 
 const openStyle = {
-  'false': css`
+  'down': css`
     display: none;
   `,
-  'true': css`
+  'up': css`
     display: grid;
     grid-template-columns: 1fr 3.5rem;
     grid-column-gap: 1rem;
     padding: 1rem;
   `
 }
-const ToDoCreateBase = styled.form<{$isopen: boolean}>`
+const ToDoCreateBase = styled.form<{$isopen: IsOpenType}>`
   position: fixed;
   bottom: 0;
   left: 0;
