@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import {SvgIcon, SvgIconProps} from './SvgIcon';
 
 interface ButtonStyleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  $size: "basic" | "large" | "circle" | "mini";
+  $size: "basic" | "large" | "circle" | "mini" | "logout";
   $btnType: "primary" | "dismiss" | "sub";
   $direction?: "up" | "down" | "left" | "right";
   $isIconOfText?: "ok" | "no";
@@ -91,6 +91,16 @@ const btnSize = {
     &:hover {
       opacity: 1;
     }
+  `,
+  "logout": css`
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: .325rem;
+    font-size: .8rem;
+    padding: .3rem;
   `
 }
 
