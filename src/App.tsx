@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet, redirect } from 'react-router-dom';
+import { ModalProvider } from './apis/ModalContext';
 import GlobalStyles from './styles/GlobalStyles';
 import Layout from './styles/Layout';
 import Home from './pages/Home';
@@ -32,13 +33,12 @@ export const routerElement = [
 
 function App() {
   const routers = createBrowserRouter(routerElement);
-  // const {modalOpen, modalType, modalMsg} = useModalState();
   return (
-    <>
+    <ModalProvider>
       <GlobalStyles />
       <RouterProvider router={routers} />
       <Modal />
-    </>
+    </ModalProvider>
   );
 }
 

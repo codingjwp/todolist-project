@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest --bail 2",
+    "test": "vitest",
     "testui": "vitest --ui",
     "format": "prettier --write src/**/*.{ts,tsx}",
     "lint": "eslint --cache --ext .ts,tsx src/**/*"
@@ -23,6 +23,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/testing-library__jest-dom": "^5.14.9",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@types/react-router-dom": "^5.3.3",
