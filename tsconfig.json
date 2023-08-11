@@ -21,6 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/tests/Home.test.tsx"],
+  "include": ["src", "src/tests/Home.test.tsx", "src/tests/SignInOfUp.test.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

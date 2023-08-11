@@ -15,7 +15,7 @@ const hasToken = async (path: string) => {
   return false;
 }
 
-export const routerElement = [
+const routerElement = [
   {
     path: '/',
     element: (
