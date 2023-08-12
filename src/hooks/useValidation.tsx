@@ -1,11 +1,18 @@
-import {ChangeEvent, useCallback, useMemo, useState } from 'react'
+import {ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
-export const useValidation = () =>{
+export const useValidation = (titles: string) =>{
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const isDisable = useMemo(() => {
     return !(isEmail && isPassword);
   }, [isEmail, isPassword]) 
+
+  useEffect(() => {
+    if (titles) {
+      setIsEmail(false);
+      setIsPassword(false);
+    }
+  }, [titles])
 
   const changeEmailData = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const EMAIL_CHECK = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;

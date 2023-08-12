@@ -8,11 +8,12 @@ import Todos from './pages/Todos';
 import NotFound from './pages/NotFound';
 import Modal from './components/Modal';
 
-const hasToken = async (path: string) => {
-  const token = localStorage.getItem('access_token') ? true : false;
-  if (path !== 'todo' && token) return redirect('/todo');
-  else if (path === 'todo' && !token) return redirect('/signin');
-  return false;
+const hasToken = (path: string) => {
+  return new Promise((reslove) => {
+    const token = localStorage.getItem('access_token') ? true : false;
+    if ((path !== 'todo' && token) || (path === 'todo' && !token)) reslove(true)
+    reslove(false);
+  })
 }
 
 const routerElement = [
@@ -24,10 +25,42 @@ const routerElement = [
       </Layout>),
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <Home />, loader: async () => {return await hasToken('/')} },
-      { path: 'signup', element: <SignInOfUp titles='Sign Up' />, loader: async () => {return await hasToken('signup')} },
-      { path: 'signin', element: <SignInOfUp titles='Sign In' />, loader: async () => {return await hasToken('signin')} },
-      { path: 'todo', element: <Todos />, loader: async () => {return await hasToken('todo')} },
+      { index: true, element: <Home />, loader: async () => {
+        try {
+          const redirectCheck =  await hasToken('/');
+          if (redirectCheck) return redirect('/todo');
+          return true;
+        }catch(error) {
+          throw new Error(`에러 발생 ${String(error)}`);
+        }
+      }},
+      { path: 'signup', element: <SignInOfUp titles='Sign Up' />, loader: async () => {
+        try {
+          const redirectCheck =  await hasToken('signup');
+          if (redirectCheck) return redirect('/todo');
+          return true;
+        }catch(error) {
+          throw new Error(`에러 발생 ${String(error)}`);
+        }
+      }},
+      { path: 'signin', element: <SignInOfUp titles='Sign In' />, loader: async () => {
+        try {
+          const redirectCheck =  await hasToken('signin');
+          if (redirectCheck) return redirect('/todo');
+          return true;
+        }catch(error) {
+          throw new Error(`에러 발생 ${String(error)}`);
+        }
+      }},
+      { path: 'todo', element: <Todos />, loader: async () => {
+        try {
+          const redirectCheck =  await hasToken('todo');
+          if (redirectCheck) return redirect('/signin');
+          return true;
+        }catch(error) {
+          throw new Error(`에러 발생 ${String(error)}`);
+        }
+      }},
   ]}
 ];
 

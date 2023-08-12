@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { Button } from '../components/Button';
@@ -14,9 +14,8 @@ interface SignInOfUpProps {
 const SignInOfUp = ({titles}: SignInOfUpProps) => {
   const navigete = useNavigate();
   const path = titles.replace(/ /g, "").toLowerCase();
-  const [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] = useValidation();
+  const [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] = useValidation(titles);
   const { setModalData } = useModalState();
-
   const PostSignInOfUpApi = (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -42,6 +41,13 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
     });
     form.reset();
   }
+
+  useEffect(() => {
+    if (titles) {
+      const form = document.querySelector('form');
+      form?.reset();
+    }
+  }, [titles])
   
   return (
     <SignInOfUpForm onSubmit={PostSignInOfUpApi}>
