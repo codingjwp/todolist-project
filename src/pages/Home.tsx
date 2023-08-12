@@ -1,7 +1,7 @@
-import { MouseEvent, memo } from 'react';
+import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
-import styled from 'styled-components';
+import { HomeContainer, HomeTitle } from './Home.styles';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,17 +19,4 @@ const Home = () => {
   );
 };
 
-const HomeTitle = styled.h1`
-  text-align: center;
-  margin-bottom: 40%;
-  font-size: 3rem;
-`;
-const HomeContainer = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-export default memo(Home);
+export default Home;

@@ -3,8 +3,8 @@ import styled, {css} from 'styled-components';
 import { IconButton } from "./Button";
 import { InputField } from "./InputField";
 import { createTodoList } from '../apis/TodoAxios';
-import { useModalState } from '../apis/ModalContext';
-import { TodoStateProps } from "../hooks/useTodoEvent";
+import { useModalState } from '../hooks/useModalState';
+import { TodoDataProps, TodoStateProps } from "../hooks/useTodoEvent";
 
 type IsOpenType = "up" | "down";
 
@@ -17,22 +17,24 @@ const TodoCreate = ({setTodoData}: TodoStateProps) => {
     const form = document.querySelector('form');
     form?.reset();
   }
-  const postTodoCreateApi = async (e: FormEvent) => {
+  const postTodoCreateApi = (e: FormEvent) => {
     e.preventDefault();
     const form = (e.target as HTMLFormElement);
     const formData = new FormData(form);
     const todoDetail = formData.get('create');
-    const res = await createTodoList(todoDetail as string);
-    if (res.status >= 400) {
-      setModalData({
-        modalOpen: true,
-        modalType: "error",
-        modalMsg: res.data,
-      })
-      form.reset();
-      return;
-    }
-    setTodoData((prev) => [res.data, ...prev]);
+    createTodoList(todoDetail as string).then((res) => {
+      if (res.status >= 400) {
+        setModalData({
+          modalOpen: true,
+          modalType: "error",
+          modalMsg: res.data as string,
+        })
+      } else {
+        setTodoData((prev) => [res.data as TodoDataProps, ...prev]);
+      }
+    }).catch((error) => {
+      throw new Error(`에러 발생 ${String(error)}`);
+    });
     form.reset();
   }
 

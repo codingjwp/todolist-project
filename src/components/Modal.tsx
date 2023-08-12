@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import { useRef, MouseEvent } from 'react';
 import { SvgIcon } from './SvgIcon';
-import { useModalState } from '../apis/ModalContext';
+import { useModalState } from '../hooks/useModalState';
 
 const Modal = () => {
   const modalRef = useRef<HTMLDivElement>(null);
   const { modalOpen, modalType, modalMsg, setModalData } = useModalState();
-  
   const modalClose = (e: MouseEvent) => {
     if (e.target !== modalRef.current) 
       setModalData({ modalOpen: false, modalType: "detail", modalMsg: "" });

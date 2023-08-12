@@ -8,10 +8,10 @@ interface TodoDataProps {
     todo: string;
     isCompleted: boolean;
     detailOfModify?: () => void;
-    updateTodoListApi: (id: string, isCompleted: boolean, todo: string) => Promise<void>;
+    updateTodoListApi: (id: string, isCompleted: boolean, todo: string) => void;
 }
 interface TodoDetailProps extends TodoDataProps {
-    deleteTodoListApi: (id: string) => Promise<void>;
+    deleteTodoListApi: (id: string) => void;
     detailTodoOpen: (todo: string) => void;
 }
 

@@ -21,6 +21,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/tests/Home.test.tsx", "src/tests/SignInOfUp.test.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/assets/*.svg"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

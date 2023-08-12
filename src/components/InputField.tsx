@@ -19,7 +19,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({type, 
 export const CheckBoxField: FC<InputFieldProps> = ({type, isCompleted, ...props}) => {
   return (
     <InputLabel $check='check'>
-      <InputFieldBase type='checkbox' $ishidden={true} defaultChecked={isCompleted} {...props}/>
+      <InputFieldBase type={type ? 'checkbox' : 'checkbox'} $ishidden={true} defaultChecked={isCompleted} {...props}/>
       <SvgIcon iconName={isCompleted ? 'checkbox' : 'uncheckbox'} fill={isCompleted ? '#2929FF' : '#000000'} />
     </InputLabel>
   )

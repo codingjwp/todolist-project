@@ -4,7 +4,7 @@ const getAcessToken = () => {
   return localStorage.getItem("access_token");
 }
 const todoAxios = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL as string,
 });
 
 todoAxios.interceptors.request.use(
@@ -21,19 +21,31 @@ interface PostSignInOfUpPRops {
   password: string;
 }
 
+interface TodoDataProps {
+  id: string;
+  isCompleted: boolean;
+  todo: string;
+  userId: string;
+}
+
+interface RequestProps {
+  statusCode: number;
+  message: string;
+}
+
 export const postSignInOfUp = async ({url, email, password}: PostSignInOfUpPRops) => {
   try{
-    const res = await todoAxios.post(`auth/${url}`, { email, password });
+    const res = await todoAxios.post<string | {"access_token" : string}>(`auth/${url}`, { email, password });
     const data = {
       status: res.status,
       data: res.data
     }
     return data;
-  } catch(error) {
-    const res = (error as AxiosError).response?.data as any;
+  } catch(error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
     const data = {
         status: res.statusCode || 400,
-        data: res.message || "에러가 발생하였습니다.",
+        data: Array.isArray(res.message) ? res.message.join(' ') : res.message || "에러가 발생하였습니다.",
     }
     return data;
   } 
@@ -41,7 +53,7 @@ export const postSignInOfUp = async ({url, email, password}: PostSignInOfUpPRops
 
 export const createTodoList = async (todoContent: string) => {
   try{
-    const res = await todoAxios.post('/todos', {
+    const res = await todoAxios.post<TodoDataProps>('/todos', {
       todo: todoContent
     })
     const data = {
@@ -49,8 +61,8 @@ export const createTodoList = async (todoContent: string) => {
       data: res.data
     }
     return data;
-  } catch(error) {
-    const res = (error as AxiosError).response?.data as any;
+  } catch(error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
     const data = {
         status: res.statusCode || 400,
         data: res.message || "에러가 발생하였습니다.",
@@ -61,14 +73,14 @@ export const createTodoList = async (todoContent: string) => {
 
 export const getTodoList = async () => {
   try {
-    const res = await todoAxios.get('/todos');
+    const res = await todoAxios.get<TodoDataProps[]>('/todos');
     const data = {
       status: res.status,
       data: res.data
     }
     return data;
-  } catch (error) {
-    const res = (error as AxiosError).response?.data as any;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
     const data = {
         status: res.statusCode || 400,
         data: res.message || "에러가 발생하였습니다.",
@@ -79,7 +91,7 @@ export const getTodoList = async () => {
 
 export const updateTodoList = async (id: string, isCompleted: boolean, todo: string) => {
   try {
-    const res = await todoAxios.put(`/todos/${id}`, {
+    const res = await todoAxios.put<TodoDataProps>(`/todos/${id}`, {
       todo: todo,
       isCompleted: isCompleted,
     });
@@ -88,8 +100,8 @@ export const updateTodoList = async (id: string, isCompleted: boolean, todo: str
       data: res.data
     }
     return data;
-  } catch(error) {
-    const res = (error as AxiosError).response?.data as any;
+  } catch(error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
     const data = {
         status: res.statusCode || 400,
         data: res.message || "에러가 발생하였습니다.",
@@ -100,14 +112,14 @@ export const updateTodoList = async (id: string, isCompleted: boolean, todo: str
 
 export const deleteTodoList = async (id: string) => {
   try {
-    const res = await todoAxios.delete(`/todos/${id}`);
+    const res = await todoAxios.delete<string>(`/todos/${id}`);
     const data = {
       status: res.status,
       data: res.data
     }
     return data;
-  } catch (error) {
-    const res = (error as AxiosError).response?.data as any;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
     const data = {
         status: res.statusCode || 400,
         data: res.message || "에러가 발생하였습니다.",

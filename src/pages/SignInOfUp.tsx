@@ -5,7 +5,7 @@ import { Button } from '../components/Button';
 import { InputField } from '../components/InputField';
 import { useValidation } from '../hooks/useValidation';
 import { postSignInOfUp } from '../apis/TodoAxios';
-import { useModalState } from '../apis/ModalContext';
+import { useModalState } from '../hooks/useModalState';
 
 interface SignInOfUpProps {
   titles: string
@@ -17,26 +17,29 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
   const [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] = useValidation();
   const { setModalData } = useModalState();
 
-  const PostSignInOfUpApi = async (e: FormEvent) => {
+  const PostSignInOfUpApi = (e: FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
-    const token = await postSignInOfUp({
+    postSignInOfUp({
       url: path,
       email: formData.get('email') as string,
       password: formData.get('password') as string,
+    }).then((token) => {
+      if (token.status >= 400) {
+        setModalData({
+          modalOpen: true,
+          modalType: "error",
+          modalMsg: token.data as string,
+        })
+        return ;
+      }
+      if (token.status === 200 && typeof token.data !== "string") 
+        localStorage.setItem('access_token', token.data.access_token);
+      navigete(token.status === 200 ? '/todo' : '/signin');
+    }).catch(error => {
+      throw new Error(`에러 발생 ${String(error)}`);
     });
-    if (token.status >= 400) {
-      setModalData({
-        modalOpen: true,
-        modalType: "error",
-        modalMsg: token.data,
-      })
-      return ;
-    }
-    if (token.status === 200) 
-      localStorage.setItem('access_token', token.data.access_token);
-    navigete(token.status === 200 ? '/todo' : '/signin');
     form.reset();
   }
   

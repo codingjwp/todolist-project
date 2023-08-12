@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, createContext, useState, ReactNode, useContext } from 'react'
+import { Dispatch, SetStateAction, createContext, useState, ReactNode } from 'react'
 
 interface ModalDataProps {
   modalOpen: boolean;
@@ -10,7 +10,8 @@ interface ModalContextProps {
   modalData: ModalDataProps;
   setModalData: Dispatch<SetStateAction<ModalDataProps>>;
 }
-const ModalContext = createContext<ModalContextProps | undefined>(undefined);
+
+export const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
 export const ModalProvider = ({children}: {children: ReactNode}) => {
   const [modalData, setModalData] = useState<ModalDataProps>({
@@ -24,16 +25,4 @@ export const ModalProvider = ({children}: {children: ReactNode}) => {
         {children}
     </ModalContext.Provider>
   )
-}
-
-export const useModalState = () => {
-  const modalState = useContext(ModalContext);
-  if (!modalState)
-    throw new Error('Cannot find modalProvider');
-  const modalOpen = modalState.modalData.modalOpen;
-  const modalType = modalState.modalData.modalType;
-  const modalMsg = modalState.modalData.modalMsg;
-  const setModalData = modalState.setModalData;
-  
-  return {modalOpen, modalType, modalMsg, setModalData};
 }
