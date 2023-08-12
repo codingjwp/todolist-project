@@ -31,15 +31,18 @@ const SignInOfUp = ({titles}: SignInOfUpProps) => {
           modalType: "error",
           modalMsg: token.data as string,
         })
-        return ;
+        return;
       }
       if (token.status === 200 && typeof token.data !== "string") 
         localStorage.setItem('access_token', token.data.access_token);
       navigete(token.status === 200 ? '/todo' : '/signin');
     }).catch(error => {
       throw new Error(`에러 발생 ${String(error)}`);
+    }).finally(() => {
+      form.reset();
+      changeEmailData();
+      changePasswordData();
     });
-    form.reset();
   }
 
   useEffect(() => {

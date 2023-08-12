@@ -14,15 +14,15 @@ export const useValidation = (titles: string) =>{
     }
   }, [titles])
 
-  const changeEmailData = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const changeEmailData = useCallback((e?: ChangeEvent<HTMLInputElement>) => {
     const EMAIL_CHECK = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    const check = EMAIL_CHECK.test(e.currentTarget.value);
+    const check = e ? EMAIL_CHECK.test(e.currentTarget.value) : false;
     if (check) setIsEmail(true);
     else if (!check && isEmail) setIsEmail(false); 
   }, [isEmail]);
 
-  const changePasswordData = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const check = e.currentTarget.value.length > 7;
+  const changePasswordData = useCallback((e?: ChangeEvent<HTMLInputElement>) => {
+    const check = e ? e.currentTarget.value.length > 7 : false;
     if (check) setIsPassword(true);
     else if (!check && isPassword) setIsPassword(false);
   }, [isPassword]);
