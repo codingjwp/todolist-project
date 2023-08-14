@@ -69,11 +69,11 @@ const btnSize = {
     position: fixed;
     left: 50%;
     bottom: -2rem;
+    transform: translateX(-50%);
     transition: .5s;
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    transform: translateX(-50%);
     z-index: 2;
   `,
   "mini": css`
@@ -103,6 +103,14 @@ const btnSize = {
     padding: .3rem;
   `
 }
+const btnDirection = {
+  "left": css`
+    left: -1.5rem;
+  `,
+  "right": css`
+    right: -1.5rem;
+  `,
+}
 
 const ButtonStyle = styled.button<ButtonStyleProps>`
   cursor: pointer;
@@ -110,6 +118,7 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
   &:disabled {
     opacity: 0.7;
   }
+  ${({$direction}) => !($direction === undefined || $direction === "up" || $direction === "down")  && btnDirection[$direction]};
   ${({$size}) => btnSize[$size]};
   ${({$btnType}) => btnTheme[$btnType]};
   ${({$isIconOfText}) => $isIconOfText === "ok" && css`
@@ -121,6 +130,4 @@ const ButtonStyle = styled.button<ButtonStyleProps>`
       margin-right: .2rem;
     }
   `}
-  left: ${({$direction}) => $direction === 'left' && '-1.5rem'};
-  right: ${({$direction}) => $direction === 'right' && '-1.5rem'};
 `
