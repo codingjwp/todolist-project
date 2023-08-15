@@ -1,39 +1,37 @@
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/elements/Button';
-import styled from 'styled-components';
-
-const HomeTitle = styled.h1`
-  text-align: center;
-  margin-bottom: 100px;
-`;
-const HomeContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  & button:first-child {
-    margin-right: 20px;
-  }
-`;
+import { Button } from '../components/Button';
+import { HomeContainer, HomeTitle } from './Home.styles';
 
 const Home = () => {
   const navigate = useNavigate();
-  const handleMoveClick = (e: MouseEvent<HTMLButtonElement>) => {
-    navigate(e.currentTarget.name);
+  const redirectToSignupOrLogin = (e: MouseEvent<HTMLButtonElement>) => {
+    const path = (e.target as Element).getAttribute('aria-label') as string;
+    navigate(path);
   };
 
   return (
-    <>
+    <HomeContainer>
       <HomeTitle>Todo</HomeTitle>
-      <HomeContainer>
-        <Button name='signin' type='submit' size='md' onClick={handleMoveClick}>
-          SignIn
-        </Button>
-        <Button name='signup' type='submit' size='md' onClick={handleMoveClick}>
-          SignUp
-        </Button>
-      </HomeContainer>
-    </>
+      <Button
+        aria-label='signup'
+        name='signup'
+        type='button'
+        onClick={redirectToSignupOrLogin}
+        $size='large'
+        $btnType='primary'>
+        Sign Up
+      </Button>
+      <Button
+        aria-label='signin'
+        name='signin'
+        type='button'
+        onClick={redirectToSignupOrLogin}
+        $size='large'
+        $btnType='primary'>
+        Sign In
+      </Button>
+    </HomeContainer>
   );
 };
 

@@ -1,51 +1,132 @@
-import AxiosInstance from './AxiosInstance';
+import axios, { AxiosError } from 'axios';
 
-// update Todo List API 연결
-export async function updateTodoAxios(
-  id: string,
-  todo: string,
-  isCompleted: boolean,
-) {
+const getAcessToken = () => {
+  return localStorage.getItem('access_token');
+};
+const todoAxios = axios.create({
+  baseURL: import.meta.env.VITE_API_URL as string,
+});
+
+todoAxios.interceptors.request.use((config) => {
+  const token = getAcessToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+interface PostSignInOfUpPRops {
+  url: string;
+  email: string;
+  password: string;
+}
+
+interface TodoDataProps {
+  id: string;
+  isCompleted: boolean;
+  todo: string;
+  userId: string;
+}
+
+interface RequestProps {
+  statusCode: number;
+  message: string;
+}
+
+export const postSignInOfUp = async ({ url, email, password }: PostSignInOfUpPRops) => {
   try {
-    const res = await AxiosInstance.put(`/todos/${id}`, {
+    const res = await todoAxios.post<string | { access_token: string }>(`auth/${url}`, {
+      email,
+      password,
+    });
+    const data = {
+      status: res.status,
+      data: res.data,
+    };
+    return data;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
+    const data = {
+      status: res.statusCode || 400,
+      data: Array.isArray(res.message)
+        ? res.message.join(' ')
+        : res.message || '에러가 발생하였습니다.',
+    };
+    return data;
+  }
+};
+
+export const createTodoList = async (todoContent: string) => {
+  try {
+    const res = await todoAxios.post<TodoDataProps>('/todos', {
+      todo: todoContent,
+    });
+    const data = {
+      status: res.status,
+      data: res.data,
+    };
+    return data;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
+    const data = {
+      status: res.statusCode || 400,
+      data: res.message || '에러가 발생하였습니다.',
+    };
+    return data;
+  }
+};
+
+export const getTodoList = async () => {
+  try {
+    const res = await todoAxios.get<TodoDataProps[]>('/todos');
+    const data = {
+      status: res.status,
+      data: res.data,
+    };
+    return data;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
+    const data = {
+      status: res.statusCode || 400,
+      data: res.message || '에러가 발생하였습니다.',
+    };
+    return data;
+  }
+};
+
+export const updateTodoList = async (id: string, isCompleted: boolean, todo: string) => {
+  try {
+    const res = await todoAxios.put<TodoDataProps>(`/todos/${id}`, {
       todo: todo,
       isCompleted: isCompleted,
     });
-
-    if (res.status === 200) return res;
-  } catch (error: any) {
-    return error.response;
+    const data = {
+      status: res.status,
+      data: res.data,
+    };
+    return data;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
+    const data = {
+      status: res.statusCode || 400,
+      data: res.message || '에러가 발생하였습니다.',
+    };
+    return data;
   }
-}
+};
 
-// delete Todo List API 연결
-export async function deleteTodoAxios(id: string) {
+export const deleteTodoList = async (id: string) => {
   try {
-    const res = await AxiosInstance.delete(`/todos/${id}`);
-    if (res.status === 204) return res;
-  } catch (error: any) {
-    return error.response;
+    const res = await todoAxios.delete<string>(`/todos/${id}`);
+    const data = {
+      status: res.status,
+      data: res.data,
+    };
+    return data;
+  } catch (error: unknown) {
+    const res = (error as AxiosError).response?.data as RequestProps;
+    const data = {
+      status: res.statusCode || 400,
+      data: res.message || '에러가 발생하였습니다.',
+    };
+    return data;
   }
-}
-
-// get Todo List API 연결
-export async function getTodosList() {
-  try {
-    const res = await AxiosInstance.get('/todos');
-    return res;
-  } catch (error: any) {
-    return error.response;
-  }
-}
-
-// create Todo List API 연결
-export async function createTodosList(updateValue: string) {
-  try {
-    const res = await AxiosInstance.post('/todos', {
-      todo: updateValue,
-    });
-    return res;
-  } catch (error: any) {
-    return error.response;
-  }
-}
+};

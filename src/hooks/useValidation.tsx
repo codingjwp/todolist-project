@@ -1,66 +1,37 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
-interface EmailStatus {
-  message: string;
-  status: boolean;
-}
-
-interface PasswordStatus {
-  message: string;
-  status: boolean;
-}
-
-interface Target {
-  email: string;
-  password: string;
-}
-
-const useValidation = (target: Target): [EmailStatus, PasswordStatus] => {
-  const { email, password } = target;
-
-  const [emailStatus, setEmailStatus] = useState<EmailStatus>({
-    message: '',
-    status: false,
-  });
-
-  const [passwordStatus, setPasswordStatus] = useState<PasswordStatus>({
-    message: '',
-    status: false,
-  });
+export const useValidation = (titles: string) => {
+  const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const isDisable = useMemo(() => {
+    return !(isEmail && isPassword);
+  }, [isEmail, isPassword]);
 
   useEffect(() => {
-    const emailValid = email.includes('@');
-
-    if (!emailValid) {
-      setEmailStatus({
-        message: '이메일에 @를 포함시켜주세요.',
-        status: false,
-      });
-    } else {
-      setEmailStatus({
-        message: '',
-        status: true,
-      });
+    if (titles) {
+      setIsEmail(false);
+      setIsPassword(false);
     }
-  }, [email]);
+  }, [titles]);
 
-  useEffect(() => {
-    const passwordValid = password.length > 7;
+  const changeEmailData = useCallback(
+    (e?: ChangeEvent<HTMLInputElement>) => {
+      const EMAIL_CHECK = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      const check = e ? EMAIL_CHECK.test(e.currentTarget.value) : false;
+      if (check) setIsEmail(true);
+      else if (!check && isEmail) setIsEmail(false);
+    },
+    [isEmail],
+  );
 
-    if (!passwordValid) {
-      setPasswordStatus({
-        message: '비밀번호는 8자 이상이여야 합니다.',
-        status: false,
-      });
-    } else {
-      setPasswordStatus({
-        message: '',
-        status: true,
-      });
-    }
-  }, [password]);
+  const changePasswordData = useCallback(
+    (e?: ChangeEvent<HTMLInputElement>) => {
+      const check = e ? e.currentTarget.value.length > 7 : false;
+      if (check) setIsPassword(true);
+      else if (!check && isPassword) setIsPassword(false);
+    },
+    [isPassword],
+  );
 
-  return [emailStatus, passwordStatus];
+  return [isEmail, isPassword, isDisable, changeEmailData, changePasswordData] as const;
 };
-
-export default useValidation;

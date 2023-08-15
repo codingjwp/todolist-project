@@ -1,9 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
     * {
         border: 0 solid #e5e7eb;
         box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
     }
     html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -22,10 +23,8 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-        /* font: inherit; */
         vertical-align: baseline;
     }
-    /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, 
     footer, header, hgroup, menu, nav, section {
         display: block;
@@ -52,4 +51,9 @@ export const GlobalStyles = createGlobalStyle`
         border-collapse: collapse;
         border-spacing: 0;
     }
+    svg, use {
+        pointer-events: none;
+    }
 `;
+
+export default GlobalStyles;

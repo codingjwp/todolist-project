@@ -25,7 +25,7 @@ module.exports = {
     'no-dupe-args': 'error',
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-duplicate-imports': 'error',
-    'no-unused-vars': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'prettier/prettier': 'error',
   },
 }
