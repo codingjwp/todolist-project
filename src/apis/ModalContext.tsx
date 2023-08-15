@@ -1,8 +1,8 @@
-import { Dispatch, SetStateAction, createContext, useState, ReactNode } from 'react'
+import { Dispatch, SetStateAction, createContext, useState, ReactNode } from 'react';
 
 interface ModalDataProps {
   modalOpen: boolean;
-  modalType: "detail" | "error";
+  modalType: 'detail' | 'error';
   modalMsg: string;
 }
 
@@ -13,16 +13,14 @@ interface ModalContextProps {
 
 export const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
-export const ModalProvider = ({children}: {children: ReactNode}) => {
+export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modalData, setModalData] = useState<ModalDataProps>({
     modalOpen: false,
-    modalType: "detail",
-    modalMsg: "",
-  })
-  
+    modalType: 'detail',
+    modalMsg: '',
+  });
+
   return (
-    <ModalContext.Provider value={{modalData, setModalData}}>
-        {children}
-    </ModalContext.Provider>
-  )
-}
+    <ModalContext.Provider value={{ modalData, setModalData }}>{children}</ModalContext.Provider>
+  );
+};

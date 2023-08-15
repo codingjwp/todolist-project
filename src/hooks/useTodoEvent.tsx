@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useModalState } from "../hooks/useModalState";
-import { getTodoList } from "../apis/TodoAxios";
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useModalState } from '../hooks/useModalState';
+import { getTodoList } from '../apis/TodoAxios';
 
 export interface TodoDataProps {
   id: string;
@@ -18,19 +18,25 @@ export const useTodoEvent = () => {
   const length = todoData.length;
   const [pages, setPages] = useState(0);
   const { setModalData } = useModalState();
-  const todoSort = todoData.sort((a, b) => {return +b.id - +a.id}).slice(pages * 9, (pages + 1) * 9);
+  const todoSort = todoData
+    .sort((a, b) => {
+      return +b.id - +a.id;
+    })
+    .slice(pages * 9, (pages + 1) * 9);
 
   useEffect(() => {
     const getTodoListApi = () => {
-      getTodoList().then(res => {
-        if (res.status >= 400) setModalData({ modalOpen: true, modalType: "error", modalMsg: res.data as string});
-        else if (typeof res.data !== "string") setTodoData(res.data);
-      }).catch(error => {
-        throw new Error(`에러 발생 ${String(error)}`);
-      });
-        
-    }
+      getTodoList()
+        .then((res) => {
+          if (res.status >= 400)
+            setModalData({ modalOpen: true, modalType: 'error', modalMsg: res.data as string });
+          else if (typeof res.data !== 'string') setTodoData(res.data);
+        })
+        .catch((error) => {
+          throw new Error(`에러 발생 ${String(error)}`);
+        });
+    };
     getTodoListApi();
-  }, [setModalData])
+  }, [setModalData]);
   return { todoData: todoSort, length, setTodoData, setPages };
-}
+};

@@ -11,11 +11,27 @@ const Home = () => {
   };
 
   return (
-      <HomeContainer>
-        <HomeTitle>Todo</HomeTitle>
-        <Button aria-label='signup' name="signup" type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>Sign Up</Button>
-        <Button aria-label='signin' name="signin" type='button' onClick={redirectToSignupOrLogin} $size='large' $btnType='primary'>Sign In</Button>
-      </HomeContainer>
+    <HomeContainer>
+      <HomeTitle>Todo</HomeTitle>
+      <Button
+        aria-label='signup'
+        name='signup'
+        type='button'
+        onClick={redirectToSignupOrLogin}
+        $size='large'
+        $btnType='primary'>
+        Sign Up
+      </Button>
+      <Button
+        aria-label='signin'
+        name='signin'
+        type='button'
+        onClick={redirectToSignupOrLogin}
+        $size='large'
+        $btnType='primary'>
+        Sign In
+      </Button>
+    </HomeContainer>
   );
 };
 
