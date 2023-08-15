@@ -26,5 +26,6 @@ module.exports = {
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-duplicate-imports': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'prettier/prettier': 'error',
   },
 }
