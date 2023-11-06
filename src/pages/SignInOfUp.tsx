@@ -39,8 +39,15 @@ const SignInOfUp = ({ titles }: SignInOfUpProps) => {
           localStorage.setItem('access_token', token.data.access_token);
         navigete(token.status === 200 ? '/todo' : '/signin');
       })
-      .catch((error) => {
-        throw new Error(`에러 발생 ${String(error)}`);
+      .catch((error: unknown) => {
+        setModalData({
+          modalOpen: true,
+          modalType: 'error',
+          modalMsg:
+            error instanceof Error
+              ? `${error.name}\n${error.message}`
+              : 'API Server is Network Error',
+        });
       })
       .finally(() => {
         form.reset();

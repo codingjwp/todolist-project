@@ -23,7 +23,14 @@ const TodoList = ({ todoData, setTodoData }: TodoListPRops) => {
           });
       })
       .catch((error) => {
-        throw new Error(`에러 발생 ${String(error)}`);
+        setModalData({
+          modalOpen: true,
+          modalType: 'error',
+          modalMsg:
+            error instanceof Error
+              ? `${error.name}\n${error.message}`
+              : 'API Server is Network Error',
+        });
       });
   };
 
@@ -45,7 +52,14 @@ const TodoList = ({ todoData, setTodoData }: TodoListPRops) => {
         }
       })
       .catch((error) => {
-        throw new Error(`에러 발생 ${String(error)}`);
+        setModalData({
+          modalOpen: true,
+          modalType: 'error',
+          modalMsg:
+            error instanceof Error
+              ? `${error.name}\n${error.message}`
+              : 'API Server is Network Error',
+        });
       });
   };
   const detailTodoOpen = (todo: string) => {

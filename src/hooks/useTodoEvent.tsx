@@ -33,7 +33,14 @@ export const useTodoEvent = () => {
           else if (typeof res.data !== 'string') setTodoData(res.data);
         })
         .catch((error) => {
-          throw new Error(`에러 발생 ${String(error)}`);
+          setModalData({
+            modalOpen: true,
+            modalType: 'error',
+            modalMsg:
+              error instanceof Error
+                ? `${error.name}\n${error.message}`
+                : 'API Server is Network Error',
+          });
         });
     };
     getTodoListApi();

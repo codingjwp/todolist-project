@@ -24,7 +24,6 @@ const routerElement = [
         <Outlet />
       </Layout>
     ),
-    errorElement: <NotFound />,
     children: [
       {
         index: true,
@@ -79,6 +78,10 @@ const routerElement = [
         },
       },
     ],
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ];
 

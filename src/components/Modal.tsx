@@ -14,12 +14,14 @@ const Modal = () => {
   return (
     <ModalBase $isopen={modalOpen} onClick={modalClose}>
       <ModalContentBase $type={modalType} ref={modalRef}>
-        {modalMsg}
+        <p>{modalMsg}</p>
         <ModalClose iconName='btn-close' $direction='down' $type={modalType} onClick={modalClose} />
       </ModalContentBase>
     </ModalBase>
   );
 };
+
+export default Modal;
 
 const ModalClose = styled(SvgIcon)<{ $type: 'detail' | 'error' }>`
   position: fixed;
@@ -49,14 +51,17 @@ const ModalContentBase = styled.div<{ $type: 'detail' | 'error' }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  word-break: break-all;
   width: 24rem;
   min-height: 4rem;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  font-size: 1.2rem;
-  color: ${({ $type }) => ($type === 'error' ? '#ffffff' : '#000000')};
   background-color: ${({ $type }) => ($type === 'error' ? '#B31010' : '#e5e7eb')};
   z-index: 11;
+  & > p {
+    line-height: 1.6rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1.2rem;
+    color: ${({ $type }) => ($type === 'error' ? '#ffffff' : '#000000')};
+  }
 `;
-export default Modal;
