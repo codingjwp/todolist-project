@@ -80,7 +80,7 @@ const routerElement = [
     ],
   },
   {
-    path: '*',
+    path: '/*',
     element: <NotFound />,
   },
 ];
