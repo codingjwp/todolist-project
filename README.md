@@ -38,7 +38,7 @@ npm install && npm run dev
 
 ## 데모 영상
 
-- vercel로 배포된 링크 [TodoList Project Link](https://todolist-project-gamma.vercel.app/)
+- vercel로 배포된 링크 [TodoList Project Link](https://todolist-project-chi.vercel.app/)
 - **빌려 사용하는 api로 인해 작동을 안 할 수도 있습니다.**
 
 ## 차이점
