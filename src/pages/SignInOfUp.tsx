@@ -91,12 +91,7 @@ const SignInOfUp = ({ titles }: SignInOfUpProps) => {
           {path === 'signin' ? 'Sign Up' : 'Sign In'}
         </Link>
       </SignInOfUpSpan>
-      <Button
-        aria-label='signinofup-btn'
-        disabled={isDisable}
-        type='submit'
-        $size='large'
-        $btnType='primary'>
+      <Button disabled={isDisable} type='submit' $size='large' $btnType='primary'>
         {titles}
       </Button>
     </SignInOfUpForm>
